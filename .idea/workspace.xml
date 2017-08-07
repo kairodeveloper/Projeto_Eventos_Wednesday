@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5be82cf-dd75-48dd-bc1c-044afc9ed83f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projeto_Eventos_Wednesday/Projeto_Eventos_Wednesday/core/admin.py" afterPath="$PROJECT_DIR$/Projeto_Eventos_Wednesday/Projeto_Eventos_Wednesday/core/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Projeto_Eventos_Wednesday/Projeto_Eventos_Wednesday/core/models.py" afterPath="$PROJECT_DIR$/Projeto_Eventos_Wednesday/Projeto_Eventos_Wednesday/core/models.py" />
-    </list>
+    <list default="true" id="b5be82cf-dd75-48dd-bc1c-044afc9ed83f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
