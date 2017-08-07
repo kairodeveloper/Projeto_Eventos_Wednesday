@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,8 @@ DATABASES = {
         # 'NAME': os.path.join(BASE_DIR, 'mydb'),
         'USER': 'postevento',
         'PASSWORD': 'evento123',
-        'HOST': '127.0.0.1',
-        'PORT': '', # 8000 is default
+        'HOST': 'localhost',
+        'PORT': '5432', # 8000 is default
     }
 }
 
