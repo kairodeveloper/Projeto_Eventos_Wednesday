@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'postevento',
         'PASSWORD': 'evento123',
         'HOST': '127.0.0.1',
-        'PORT': '', # 8000 is default
+        'PORT': '5432', # 8000 is default
     }
 }
 
