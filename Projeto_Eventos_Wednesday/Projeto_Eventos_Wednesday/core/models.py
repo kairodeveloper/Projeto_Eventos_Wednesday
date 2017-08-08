@@ -83,6 +83,6 @@ class Inscricao(models.Model):
 
 class Apoio(models.Model):
     cod_apoio = models.IntegerField(primary_key=True)
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE,related_name='apoios')
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_de_apoio = EnumField(TipoApoio, Default=TipoApoio.APOIO)
