@@ -86,3 +86,11 @@ class Apoio(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE,related_name='apoios')
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_de_apoio = EnumField(TipoApoio, Default=TipoApoio.APOIO)
+
+class Item_Inscricao(models.Model):
+    cod_item = models.IntegerField(primary_key=True)
+    inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE)
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+    horario = models.TimeField()
+
+
