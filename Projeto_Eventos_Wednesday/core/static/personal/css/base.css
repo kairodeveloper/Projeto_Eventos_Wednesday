@@ -1,0 +1,26 @@
+nav {	
+	box-shadow: none;
+    background: none;
+}
+
+#fullscreen{
+	position:absolute;
+	height: 100%;
+	width: 100%;
+	padding-top: 2%;
+}
+
+.centralized{
+	padding-left: 20%;
+	padding-right: 20%;
+}
+
+.m-btn {
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+.justificado{
+	padding-left: 10%;
+	padding-right: 10%;
+}

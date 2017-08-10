@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
+    'materializecssform',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'Projeto_Eventos_Wednesday.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbevento',
+        'NAME': 'dbeventone',
         # 'NAME': os.path.join(BASE_DIR, 'mydb'),
         'USER': 'postevento',
         'PASSWORD': 'evento123',

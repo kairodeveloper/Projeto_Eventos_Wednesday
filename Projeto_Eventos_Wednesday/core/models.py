@@ -44,11 +44,14 @@ class Atividade(models.Model):
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
 
 class Usuario(models.Model):
-    cod_user = models.IntegerField(primary_key=True)
-    nome = models.CharField(max_length=50)
-    telefone = models.CharField(max_length=9)
+    cod_user = models.AutoField(primary_key=True)
+    login = models.CharField(max_length=50)
     email = models.CharField(max_length=45)
     senha = models.CharField(max_length=20)
+
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
 
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
@@ -63,7 +66,7 @@ class Evento(models.Model):
 
 class Cupom(models.Model):
     cod_cupom = models.IntegerField(primary_key=True)
-    desconto = models.DecimalField()
+    desconto = models.DecimalField("desconto", max_digits=3, decimal_places=2)
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
@@ -85,12 +88,4 @@ class Apoio(models.Model):
     cod_apoio = models.IntegerField(primary_key=True)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE,related_name='apoios')
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
-    tipo_de_apoio = EnumField(TipoApoio, Default=TipoApoio.APOIO)
-
-class Item_Inscricao(models.Model):
-    cod_item = models.IntegerField(primary_key=True)
-    inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE)
-    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
-    horario = models.TimeField()
-
-
+    tipo_de_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
