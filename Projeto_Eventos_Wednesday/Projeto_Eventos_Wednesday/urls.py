@@ -19,5 +19,5 @@ from core.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^cadastrar/$', cadastrar, name="cadastrar")
+    url(r'^cadastrar/$', registrar, name="cadastrar")
 ]

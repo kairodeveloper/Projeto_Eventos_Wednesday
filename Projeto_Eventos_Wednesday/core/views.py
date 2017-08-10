@@ -1,16 +1,22 @@
-from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate
 from .forms import *
 
 # Create your views here.
 
 
-def cadastrar(request):
+def registrar(request):
 
     if request.method == 'POST':
         form = CadastrarForm(request.POST)
-        user = form.save()
+
+        if form.is_valid():
+            usuario = form.save()
+            return HttpResponseRedirect("/")
+        else:
+            return render(request, "cadastrar.html", {'form': form})
     else:
         form = CadastrarForm()
     return render(request, "cadastrar.html", {'form': form})
