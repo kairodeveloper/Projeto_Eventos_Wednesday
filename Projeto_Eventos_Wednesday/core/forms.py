@@ -1,15 +1,16 @@
 from django import forms
-from .models import *
+from django.contrib.auth.models import User
 
 
 class CadastrarForm(forms.ModelForm):
-    senha = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput)
     confirmar_senha = forms.CharField(label='confirmar senha', widget=forms.PasswordInput)
 
     def save(self, commit=True):
         user = super(CadastrarForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
         user.save()
 
     class Meta:
-        model = Usuario
-        fields = ['login', 'email', 'senha']
+        model = User
+        fields = ['username', 'email']

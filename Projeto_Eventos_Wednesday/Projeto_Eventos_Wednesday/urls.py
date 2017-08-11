@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from core.views import *
+from core import views
+from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^cadastrar/$', registrar, name="cadastrar")
+    url(r'^cadastrar/$', views.registrar, name="cadastrar"),
+    url(r'^home', views.home, name="home"),
+    url(r'^$', login, {'template_name': 'login.html'}, name="login")
 ]

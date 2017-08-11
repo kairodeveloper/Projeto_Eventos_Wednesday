@@ -1,10 +1,31 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 	<title>Event_On | Login</title>
 	{% include "headerbase.html" %}
 </head>
 <body>
+	<div class="fullscreen">
+		<div class="row container valign-wrapper">
+			<div class="col m7">
+				<p class="center-align justificado">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nibh gravida, tempor arcu quis, aliquet neque. Nullam tincidunt consectetur est et laoreet.</p>
+			</div>
+			<div class="col m5">
+			<h4 class="center-align">Login</h4>
 
+					<form method="POST">
+						<div class="row">
+							{% csrf_token %}
+							{{ form.as_p }}
+							<div class="input-field col m12">
+							  <button class="waves-effect waves-light btn col m12 m-btn" type="submit">LOGIN</button>
+							</div>
+						</div>
+					</form>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>

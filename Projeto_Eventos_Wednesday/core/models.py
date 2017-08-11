@@ -1,5 +1,6 @@
 from django.db import models
 from enumfields import Enum, EnumField
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -43,21 +44,11 @@ class Atividade(models.Model):
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
 
-class Usuario(models.Model):
-    cod_user = models.AutoField(primary_key=True)
-    login = models.CharField(max_length=50)
-    email = models.CharField(max_length=45)
-    senha = models.CharField(max_length=20)
-
-    class Meta:
-        verbose_name = 'Usuário'
-        verbose_name_plural = 'Usuários'
-
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
     descricao = models.CharField(max_length=200)
-    administrador = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.DEFAULT)
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
@@ -78,7 +69,7 @@ class Instituicao(models.Model):
 class Inscricao(models.Model):
     cod_inscricao = models.IntegerField(primary_key=True)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-    solicitante = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    solicitante = models.ForeignKey(User, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
     valor = models.FloatField()
     estado_inscricao = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)

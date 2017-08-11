@@ -3,7 +3,7 @@ nav {
     background: none;
 }
 
-#fullscreen{
+.fullscreen{
 	position:absolute;
 	height: 100%;
 	width: 100%;
