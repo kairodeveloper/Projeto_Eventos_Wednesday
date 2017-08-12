@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
+from .models import Usuario
+from django.contrib.auth import get_user_model
 
+Usuario = get_user_model()
 
 class CadastrarForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -8,9 +10,9 @@ class CadastrarForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(CadastrarForm, self).save(commit=False)
-        user.set_password(self.cleaned_data['password'])
+        user.set_password(self.cleaned_data['senha'])
         user.save()
 
     class Meta:
-        model = User
-        fields = ['username', 'email']
+        model = Usuario
+        fields = ['nome', 'email']

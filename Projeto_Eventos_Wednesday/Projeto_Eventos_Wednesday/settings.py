@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'home'
+
+AUTH_USER_MODEL = 'usuario.Usuario'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'materializecssform',
+    'Projeto_Eventos_Wednesday',
+    'usuario',
 ]
 
 MIDDLEWARE = [
