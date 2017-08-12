@@ -1,12 +1,12 @@
 from django import forms
 from .models import Usuario
-from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+#from django.contrib.auth import get_user_model
 
-Usuario = get_user_model()
-
-class CadastrarForm(forms.ModelForm):
+class CadastrarForm(UserCreationForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirmar_senha = forms.CharField(label='confirmar senha', widget=forms.PasswordInput)
+
 
     def save(self, commit=True):
         user = super(CadastrarForm, self).save(commit=False)
