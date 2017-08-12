@@ -16,11 +16,11 @@ def registrar(request):
             usuario = form.save()
             return redirect("/")
         else:
-            return render(request, "cadastrar.html", {'form': form})
+            return render(request, "base/cadastrar.html", {'form': form})
     else:
         form = CadastrarForm()
-    return render(request, "cadastrar.html", {'form': form})
+    return render(request, "base/cadastrar.html", {'form': form})
 
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, "base/home.html")

@@ -1,6 +1,5 @@
 from django.db import models
 from enumfields import Enum, EnumField
-from ..usuario.models import Usuario
 
 # Create your models here.
 
@@ -57,7 +56,7 @@ class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
     descricao = models.CharField(max_length=200)
-    administrador = models.ForeignKey(Usuario , on_delete=models.CASCADE)
+    administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE)
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.DEFAULT)
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
