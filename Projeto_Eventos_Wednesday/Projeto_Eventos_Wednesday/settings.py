@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = 'home'
+#AUTH_USER_MODEL = 'usuario.Usuario'
 
-AUTH_USER_MODEL = 'usuario.Usuario'
+LOGIN_REDIRECT_URL = 'home'
 
 # Application definition
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'Projeto_Eventos_Wednesday',
     'usuario',
 ]
 
@@ -109,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -8,7 +8,7 @@ from .forms import *
 def registrar(request):
 
     if request.method == 'POST':
-        form = CadastrarForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
             usuario = authenticate(username=form.cleaned_data['username'],
@@ -18,7 +18,7 @@ def registrar(request):
         else:
             return render(request, "base/cadastrar.html", {'form': form})
     else:
-        form = CadastrarForm()
+        form = CustomUserCreationForm()
     return render(request, "base/cadastrar.html", {'form': form})
 
 
