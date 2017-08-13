@@ -1,6 +1,6 @@
 from django.db import models
 from time import timezone
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserManager
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -29,14 +29,16 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Usuario(AbstractBaseUser):
-    nomedeusuario = models.CharField(max_length=30)
+    nomedeusuario = models.CharField(max_length=30, unique=True)
     nome = models.CharField(max_length=30)
     senha = models.CharField(max_length=30)
     email = models.CharField(max_length=30, unique=True)
 
-    USERNAME_FIELD = 'email'
+    objects = UserManager()
+
+    USERNAME_FIELD = 'nomedeusuario'
     PASSWORD_FIELD = 'senha'
-    REQUIRED_FIELDS = ['nome']
+    REQUIRED_FIELDS = ['email']
 
     #objects = UsuarioManage()
 

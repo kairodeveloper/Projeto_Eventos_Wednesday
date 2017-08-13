@@ -1,15 +1,18 @@
 from django import forms
 from .models import Usuario
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-#from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model
 
-class CadastrarForm(UserCreationForm):
+Usuario = get_user_model()
+
+class CadastrarForm(forms.ModelForm):
+    senha = forms.CharField(label='senha', widget=forms.PasswordInput)
 
     def save(self, commit=True):
-        user = super(CadastrarForm, self).save(commit=False)
-        user.set_password(self.cleaned_data['senha'])
-        user.save()
+        usuario = super(CadastrarForm, self).save(commit=False)
+        usuario.set_password(self.cleaned_data['senha'])
+        usuario.save()
 
     class Meta:
         model = Usuario
-        fields = ['nome', 'email']
+        fields = ['nomedeusuario', 'email']

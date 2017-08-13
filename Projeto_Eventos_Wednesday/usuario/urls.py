@@ -19,6 +19,6 @@ from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^cadastrar/$', registrar, name="cadastrar"),
-    url(r'^home/', home, name="home"),
-    url(r'^$', login, {'template_name': 'base/login.html'}, name="login")
+    url(r'^home/$', home, name="home"),
+    url(r'^', login, {'template_name': 'base/login.html'}, name="login"),
 ]

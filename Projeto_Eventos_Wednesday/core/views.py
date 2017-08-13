@@ -2,8 +2,6 @@ from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 from django.shortcuts import render
 
-from Projeto_Eventos_Wednesday.usuario.forms import *
-
 
 # Create your views here.
 
