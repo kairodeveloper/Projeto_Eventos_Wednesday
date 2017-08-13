@@ -25,3 +25,34 @@ def registrar(request):
 @login_required()
 def home(request):
     return render(request, "base/home.html")
+
+@login_required()
+def criaEvento(request):
+    #TODO
+    return False
+
+def editarEvento(request):
+    #TODO
+    return False
+
+def removeEvento(request):
+    #TODO
+    return False
+
+def addAtividade(request):
+    #TODO
+    return False
+
+def removeAtividade(request):
+    #TODO
+    return False
+
+def criarCupom(request):
+    #TODO
+    return False
+
+@login_required
+def alteraDados(request):
+    #TODO
+    return False
+
