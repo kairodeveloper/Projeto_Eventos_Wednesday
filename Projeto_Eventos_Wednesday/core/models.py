@@ -69,6 +69,8 @@ class Cupom(models.Model):
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
+    def __init__(self):
+        pass
 
 class Instituicao(models.Model):
     cod_instituicao = models.IntegerField(primary_key=True)
