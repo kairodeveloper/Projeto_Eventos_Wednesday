@@ -107,11 +107,13 @@ class Cupom(models.Model):
     @property
     def desconto(self):
         return self._desconto
+
     @desconto.setter
     def desconto(self,valor_desconto):
         if not  isinstance(int,float):
             raise ValueError("Valor de desconto invalido")
         self._desconto = valor_desconto
+
     def calcular_valor_cupom(self,valor_evento):
         return self._desconto * valor_evento
 
