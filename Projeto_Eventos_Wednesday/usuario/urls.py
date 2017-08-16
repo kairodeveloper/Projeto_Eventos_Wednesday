@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from .views import *
-from django.contrib.auth.views import login
+from django.contrib.auth.views import login,logout
 
 urlpatterns = [
     url(r'^cadastrar/$', registrar, name="cadastrar"),
     url(r'^home/$', home, name="home"),
     url(r'^', login, {'template_name': 'base/login.html'}, name="login"),
+    url(r'^logout/', logout, {'template_name': 'base/login.html'}, name="logout"),
 ]

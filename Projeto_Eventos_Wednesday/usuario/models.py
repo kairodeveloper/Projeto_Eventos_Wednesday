@@ -43,8 +43,8 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     objects = UsuarioManage()
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('usuario')
+        verbose_name_plural = _('usuarios')
 
     def get_short_name(self):
         return self.nomedeusuario
