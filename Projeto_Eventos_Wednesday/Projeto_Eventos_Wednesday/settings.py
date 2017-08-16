@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'home'
+
+AUTH_USER_MODEL = 'usuario.Usuario'
 
 # Application definition
 
@@ -37,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
-]
 
+    'core',
+    'usuario',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,7 +85,7 @@ DATABASES = {
         # 'NAME': os.path.join(BASE_DIR, 'mydb'),
         'USER': 'postevento',
         'PASSWORD': 'evento123',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '5432', # 8000 is default
     }
 }
@@ -124,3 +128,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
