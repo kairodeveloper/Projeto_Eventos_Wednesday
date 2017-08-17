@@ -49,7 +49,7 @@ class Atividade(models.Model):
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-
+    evento = models.ForeignKey(Evento,on_delete=models.CASCADE)
 
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)

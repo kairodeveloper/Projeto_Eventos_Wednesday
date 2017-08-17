@@ -50,7 +50,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.nomedeusuario
 
 class Inscricao(models.Model):
-    cod_inscricao = models.IntegerField(primary_key=True)
+    cod_inscricao = models.IntegerField(primary_key =True)
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
