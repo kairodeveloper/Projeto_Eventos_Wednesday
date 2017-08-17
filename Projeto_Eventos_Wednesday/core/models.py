@@ -50,12 +50,6 @@ class Atividade(models.Model):
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
 
-class Usuario(models.Model):
-    cod_user = models.IntegerField(primary_key=True)
-    nome = models.CharField(max_length=50)
-    telefone = models.CharField(max_length=9)
-    email = models.CharField(max_length=45)
-    senha = models.CharField(max_length=20)
 
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
@@ -66,9 +60,10 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
-    atividades = models.ForeignKey(Atividade,on_delete=models.CASCADE)
+    #atividades = models.ForeignKey(Atividade,on_delete=models.CASCADE)
 
     valor_evento = models.DecimalField()
+
     def __init___(self,titulo,cod_evento):
         self._titulo = titulo
         self._cod_evento = cod_evento
@@ -134,17 +129,3 @@ class Pagamento(models.Model):
     datapagamento = models.DateField()
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
 
-class Inscricao(models.Model):
-    cod_inscricao = models.IntegerField(primary_key=True)
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-    solicitante = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    data_inscricao = models.DateTimeField()
-    valor = models.FloatField()
-    estado_inscricao = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
-    dia_pagamento = models.DateField()
-
-class Item_Inscricao(models.Model):
-    cod_item = models.IntegerField(primary_key=True)
-    inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE)
-    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
-    horario = models.TimeField()
