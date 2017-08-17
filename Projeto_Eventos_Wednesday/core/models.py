@@ -42,15 +42,6 @@ class TipoAtividade(Enum):
 #CLASSES MODELO
 
 
-class Atividade(models.Model):
-    cod_atividade = models.IntegerField(primary_key=True)
-    titulo = models.CharField(max_length=60)
-    descricao = models.CharField(max_length=150)
-    valor = models.FloatField()
-    data = models.DateField()
-    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-
-
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
@@ -60,7 +51,16 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
-    atividades = models.ForeignKey(Atividade,on_delete=models.CASCADE)
+
+
+class Atividade(models.Model):
+    cod_atividade = models.IntegerField(primary_key=True)
+    titulo = models.CharField(max_length=60)
+    descricao = models.CharField(max_length=150)
+    valor = models.FloatField()
+    data = models.DateField()
+    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
 
 class Cupom(models.Model):
