@@ -65,13 +65,9 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
-    #atividades = models.ForeignKey(Atividade,on_delete=models.CASCADE)
-
     valor_evento = models.DecimalField()
 
-    def __init___(self,):
 
-        self.atividade = list()
 
     def __str__(self):
         return "Titulo Evento: ", self.titulo
@@ -79,18 +75,18 @@ class Evento(models.Model):
     @property
     def titulo(self):
         print("Titulo do Evento: ")
-        return self._titulo
+        return self.titulo
 
 
     @property
     def administrador(self):
         return self.administrador
 
-    def adicionar_atividade_evento(self,atividades):
-        if self.atividade in atividades:
+    def adicionar_atividade_evento(self,atividade):
+        if atividade in self.atividades:
             return "ja esta cadastrado"
         else:
-            atividades.append(self.atividade)
+            self.atividades.append(atividade)
 
     def validar_data_evento(self,data_inicio,data_fim):
         if data_fim.date() < data_inicio.date():
