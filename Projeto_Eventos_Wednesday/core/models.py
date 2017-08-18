@@ -69,11 +69,8 @@ class Evento(models.Model):
 
     valor_evento = models.DecimalField()
 
-    def __init___(self,titulo,cod_evento):
-        self._titulo = titulo
-        self._cod_evento = cod_evento
-        self._estado_evento = EstadoEvento.DEFAULT
-        self.tipo_evento = TipoEvento.DEFAULT
+    def __init___(self,):
+
         self.atividade = list()
 
     def __str__(self):
