@@ -1,3 +1,5 @@
+from string import ascii_uppercase , digits
+import random
 from django.db import models
 from enumfields import Enum, EnumField
 # Create your models here.
@@ -51,6 +53,9 @@ class Atividade(models.Model):
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
     evento = models.ForeignKey(Evento,on_delete=models.CASCADE)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
@@ -67,21 +72,23 @@ class Evento(models.Model):
     def __init___(self,titulo,cod_evento):
         self._titulo = titulo
         self._cod_evento = cod_evento
+        self._estado_evento = EstadoEvento.DEFAULT
+        self.tipo_evento = TipoEvento.DEFAULT
+        self.atividade = list()
 
     def __str__(self):
-        return self.titulo
+        return "Titulo Evento: ", self.titulo
+
     @property
     def titulo(self):
         print("Titulo do Evento: ")
         return self._titulo
 
-    @property
-    def atividades(self):
-        return self.atividades.all()
 
     @property
     def administrador(self):
         return self.administrador
+
     def adicionar_atividade_evento(self,atividades):
         pass
 
@@ -95,13 +102,20 @@ class Cupom(models.Model):
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
-    def __init__(self,nome_cupom, desconto):
-        self._desconto = desconto
-        self._nome_cupom = nome_cupom
+    def __init__(self, valor_desconto, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._desconto = valor_desconto
+        self._cod_cupom = self._gerar_codigo_cupom
+
+    @property
+    def codigo(self):
+        return self._cod_cupom
+
 
     @property
     def desconto(self):
         return self._desconto
+
 
     @desconto.setter
     def desconto(self,valor_desconto):
@@ -109,13 +123,46 @@ class Cupom(models.Model):
             raise ValueError("Valor de desconto invalido")
         self._desconto = valor_desconto
 
+
+
+    def validade_cupom(self):
+       if self.validade:
+           pass
+
+
+
+    def _gerar_codigo_cupom(self):
+        #gerar cupom randomically
+        letras = list(ascii_uppercase)
+        numeros = list(digits)
+
+        letras_escolhida = random.sample(letras,3)
+
+
+        numeros_escolhidos = random.sample(numeros,2)
+
+        valor_gerado = letras_escolhida + numeros_escolhidos
+
+        random.shuffle(valor_gerado)
+
+        return "".join(valor_gerado)
+
+
+
     def calcular_valor_cupom(self,valor_evento):
-        return self._desconto * valor_evento
+        return "%.2f ",(self._desconto * valor_evento)
+
+    def __str__(self):
+        return "cupom: , valor desconto ", self.codigo, self.desconto
 
 class Instituicao(models.Model):
     cod_instituicao = models.IntegerField(primary_key=True)
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class Apoio(models.Model):
@@ -125,7 +172,12 @@ class Apoio(models.Model):
     tipo_de_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
 
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 class Pagamento(models.Model):
     datapagamento = models.DateField()
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

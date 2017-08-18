@@ -29,7 +29,7 @@ class UsuarioManage(BaseUserManager):
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-    nomedeusuario = models.CharField(max_length=30, unique=True)
+    nome_usuario = models.CharField(max_length=30, unique=True)
     nome = models.CharField(max_length=30)
     senha = models.CharField(max_length=30)
     email = models.CharField(max_length=30, unique=True)
@@ -41,6 +41,14 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     objects = UsuarioManage()
+
+    def __init__(self, nome, senha, email, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.nome = nome
+        self.senha = senha
+        self.email = email
+
+
 
     class Meta:
         verbose_name = _('usuario')
