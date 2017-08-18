@@ -1,6 +1,10 @@
+from datetime import date
 from string import ascii_uppercase , digits
 import random
 from django.db import models
+
+from ..usuario.models import Inscricao
+from ..usuario.models import EstadoInscricao
 from enumfields import Enum, EnumField
 # Create your models here.
 
@@ -23,10 +27,6 @@ class EstadoEvento(Enum):
     EM_ANDAMENTO = 2
     ENCERRADO = 3
 
-
-class EstadoInscricao(Enum):
-    NAO_PAGO = 0
-    PAGO = 1
 
 
 class TipoApoio(Enum):
@@ -56,18 +56,25 @@ class Atividade(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
+
+class Tag(models.Model):
+    pass
+    nome = models.CharField(max_lenght=20)
+
 class Evento(models.Model):
     cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
     descricao = models.CharField(max_length=200)
-    administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE)
+    administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE,
+                                      related_name='eventos_criados')
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.DEFAULT)
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
     valor_evento = models.DecimalField()
-
-
+    tags  =  models.ForeignKey('')
+    apoio = models.ManyToManyField(Apoio)
 
     def __str__(self):
         return "Titulo Evento: ", self.titulo
@@ -76,6 +83,7 @@ class Evento(models.Model):
     def titulo(self):
         print("Titulo do Evento: ")
         return self.titulo
+
 
 
     @property
@@ -97,7 +105,7 @@ class Cupom(models.Model):
     desconto = models.DecimalField("desconto", max_digits=3, decimal_places=2)
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-
+    # Pesquisar sobre validator
     def __init__(self, valor_desconto, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._desconto = valor_desconto
@@ -115,16 +123,16 @@ class Cupom(models.Model):
 
     @desconto.setter
     def desconto(self,valor_desconto):
-        if not  isinstance(int,float):
+        if not isinstance(int,float):
             raise ValueError("Valor de desconto invalido")
         self._desconto = valor_desconto
 
 
 
     def validade_cupom(self):
-       if self.validade:
-           pass
-
+        if  date.today() <= self.validade:
+            return True
+        return False
 
 
     def _gerar_codigo_cupom(self):
@@ -155,7 +163,7 @@ class Instituicao(models.Model):
     cod_instituicao = models.IntegerField(primary_key=True)
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
-
+    apoio = models.ManyToManyField(Apoio)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -173,7 +181,14 @@ class Apoio(models.Model):
 
 class Pagamento(models.Model):
     datapagamento = models.DateField()
-    status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
+    inscricao = models.OneToOneField(Inscricao,on_delete = models.CASCADE)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def realizar_pagamento(self,valor_pagamento):
+        if valor_pagamento >= self.inscricao.valor:
+            self.inscricao.status = EstadoInscricao.PAGO
+            self.inscricao.save()
+            self.datapagamento = date.today()
+            self.save()
+        else:
+            raise Exception("Pagamento nao efetuado")
+
