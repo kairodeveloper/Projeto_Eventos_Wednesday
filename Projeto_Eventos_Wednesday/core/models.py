@@ -51,7 +51,7 @@ class Atividade(models.Model):
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-    evento = models.ForeignKey(Evento,on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento,on_delete=models.CASCADE,related_name="atividades")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -90,7 +90,10 @@ class Evento(models.Model):
         return self.administrador
 
     def adicionar_atividade_evento(self,atividades):
-        pass
+        if self.atividade in atividades:
+            return "ja esta cadastrado"
+        else:
+            atividades.append(self.atividade)
 
     def validar_data_evento(self,data_inicio,data_fim):
         if data_fim.date() < data_inicio.date():
