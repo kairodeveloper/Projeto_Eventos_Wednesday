@@ -38,7 +38,7 @@ class UsuarioManage(BaseUserManager):
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-    nome_usuario = models.CharField(max_length=30, unique=True)
+    nomedeusuario = models.CharField(max_length=30, unique=True)
     nome = models.CharField(max_length=30)
     senha = models.CharField(max_length=30)
     email = models.CharField(max_length=30, unique=True)
@@ -46,19 +46,20 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
 
-    def criar_evento(self,titulo,descricao,data_inicio,data_fim,valor_evento):
+    def criar_evento(self,titulo,descricao,data_inicio,data_fim):
         evento = Evento(titulo=titulo,descricao=descricao,
                         data_inicio=data_inicio,data_fim=data_fim,
-                        administrador=self,valor_evento=valor_evento)
+                        administrador=self)
         evento.save()
-
-
 
     USERNAME_FIELD = 'nomedeusuario'
     PASSWORD_FIELD = 'senha'
     REQUIRED_FIELDS = ['email']
 
     objects = UsuarioManage()
+
+    def __str__(self):
+       return nomedeusuario
 
     def __init__(self, nome, senha, email, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -74,7 +75,6 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.nomedeusuario
 
 class Inscricao(models.Model):
-    cod_inscricao = models.IntegerField(primary_key =True)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
@@ -83,12 +83,15 @@ class Inscricao(models.Model):
     atividades = models.ManyToManyField('core.Atividade',on_delete = models.CASCADE,related_name='atividades')
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
 
+
     def adicionar_atividade(self,atividade):
        if  atividade in self.evento.atividades :
            self.atividades.add(atividade)
            self.valor += atividade.valor
        else:
            raise Exception("nao ")
+
+
     def aplicar_cupom(self,cupom):
         if cupom.validade_cupom():
             self.valor -= self.valor*cupom.desconto

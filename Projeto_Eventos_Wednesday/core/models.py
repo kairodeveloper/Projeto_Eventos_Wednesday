@@ -72,7 +72,6 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
-    valor_evento = models.DecimalField()
     tags  =  models.ForeignKey('')
     apoio = models.ManyToManyField(Apoio)
 
@@ -150,8 +149,8 @@ class Cupom(models.Model):
 
 
 
-    def calcular_valor_cupom(self,valor_evento):
-        return "%.2f ",(self._desconto * valor_evento)
+    def calcular_valor_cupom(self,inscricao):
+        return "%.2f ",(self._desconto * inscricao.valor)
 
     def __str__(self):
         return "cupom: , valor desconto ", self.codigo, self.desconto
