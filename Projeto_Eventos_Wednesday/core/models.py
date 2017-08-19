@@ -92,7 +92,7 @@ class Evento(models.Model):
 
     def adicionar_atividade_evento(self,atividade):
         if atividade in self.atividades:
-            return "ja esta cadastrado"
+            raise  Exception("ja esta cadastrado")
         else:
             self.atividades.append(atividade)
 
