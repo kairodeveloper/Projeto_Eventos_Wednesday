@@ -3,8 +3,7 @@ from string import ascii_uppercase , digits
 import random
 from django.db import models
 
-from ..usuario.models import Inscricao
-from ..usuario.models import EstadoInscricao
+from usuario.models import Inscricao, EstadoInscricao
 from enumfields import Enum, EnumField
 # Create your models here.
 
