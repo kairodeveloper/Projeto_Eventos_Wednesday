@@ -111,17 +111,14 @@ class Cupom(models.Model):
         self._desconto = valor_desconto
         self._cod_cupom = self._gerar_codigo_cupom
 
-    @property
     def codigo(self):
         return self._cod_cupom
 
 
-    @property
     def desconto(self):
         return self._desconto
 
 
-    @desconto.setter
     def desconto(self,valor_desconto):
         if not isinstance(int,float):
             raise ValueError("Valor de desconto invalido")
