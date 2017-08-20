@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserMa
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
-from core.models import Evento
+from ..core.models import Evento
 
 
 class EstadoInscricao(Enum):
@@ -64,13 +64,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 
 class Inscricao(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
-    valor = models.DecimalField()
-    dia_pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE)
-    atividades = models.ManyToManyField('core.Atividade', on_delete = models.CASCADE, related_name='atividades')
+    valor = models.DecimalField(max_digits=4, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
+    pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
 
     def adicionar_atividade(self,atividade):
         if atividade in self.evento.atividades:
