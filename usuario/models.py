@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserMa
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
-from ..core.models import Evento
+from core.models import Evento
 
 
 class EstadoInscricao(Enum):
