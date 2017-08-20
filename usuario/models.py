@@ -3,6 +3,13 @@ from time import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserManager, PermissionsMixin
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumField
+from core import models as core_models
+
+
+class EstadoInscricao(Enum):
+    NAO_PAGO = 0
+    PAGO = 1
 
 
 class UsuarioManage(BaseUserManager):
@@ -36,6 +43,15 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
+    def criar_evento(self,titulo,descricao,tipo_evento,data_inicio, data_fim):
+        evento = core_models.Evento(titulo=titulo, descricao=descricao, tipo_evento=tipo_evento, dt_inicio=data_inicio, dt_fim=data_fim, administrador=self)
+        evento.save()
+
+    def listar_evento(self):
+        eventos = core_models.Evento.objects.filter(administrador=self)
+        return eventos
+
+
     USERNAME_FIELD = 'nomedeusuario'
     PASSWORD_FIELD = 'senha'
     REQUIRED_FIELDS = ['email']
@@ -49,13 +65,27 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.nomedeusuario
 
+
 class Inscricao(models.Model):
-    cod_inscricao = models.IntegerField(primary_key=True)
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
-    valor = models.FloatField()
-    dia_pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE)
+    valor = models.DecimalField(max_digits=4, decimal_places=2)
+    status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
+    pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
+
+    def adicionar_atividade(self,atividade):
+        if atividade in self.evento.atividades:
+            self.atividades.add(atividade)
+            self.valor += atividade.valor
+        else:
+            raise Exception("atividade nao adicionada")
+
+    def aplicar_cupom(self,cupom):
+        if cupom.validade_cupom():
+            self.valor -= self.valor*cupom.desconto
+        else:
+            raise Exception("Cupom nao e valido  ")
 
 
 class Item_Inscricao(models.Model):
@@ -63,3 +93,4 @@ class Item_Inscricao(models.Model):
     inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE)
     atividade = models.ForeignKey('core.Atividade', on_delete=models.CASCADE)
     horario = models.TimeField()
+
