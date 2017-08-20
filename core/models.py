@@ -3,13 +3,14 @@ from string import ascii_uppercase, digits
 import random
 from django.db import models
 from enumfields import Enum, EnumField
+from usuario.models import *
 # Create your models here.
 
 #ENUM's
 
 
 class TipoEvento(Enum):
-    DEFAULT = 0
+    OUTROS = 0
     SEMANA_CIENTIFICA = 1
     PALESTRA = 2
     CICLO_DE_PALESTRAS = 3
@@ -19,7 +20,6 @@ class TipoEvento(Enum):
 
 
 class EstadoEvento(Enum):
-    DEFAULT=0
     ABERTO = 1
     EM_ANDAMENTO = 2
     ENCERRADO = 3
@@ -42,57 +42,35 @@ class TipoAtividade(Enum):
 
 class Tag(models.Model):
     nome = models.CharField(max_length=20)
-
+    #TODO tag many to many
 
 class Evento(models.Model):
-    cod_evento = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=45)
     descricao = models.CharField(max_length=200)
-    administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE,
-                                      related_name='eventos_criados')
-    tipo_evento = EnumField(TipoEvento, default=TipoEvento.DEFAULT)
+    administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE, related_name='eventos_criados')
+    tipo_evento = EnumField(TipoEvento, default=TipoEvento.OUTROS)
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
-    estado_evento = EnumField(EstadoEvento, default=EstadoEvento.DEFAULT)
+    estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
 
-    @property
-    def titulo(self):
-        print("Titulo do Evento: ")
-        return self.titulo
-
-    @property
-    def administrador(self):
-        return self.administrador
-
-#    def adicionar_atividade_evento(self,atividade):
-#        if atividade in self.atividades:
-#            raise Exception("ja esta cadastrado")
-#        else:
-#            self.atividades.append(atividade)
+    def adicionar_atividade_evento(self,atividade):
+        if atividade in self.atividades:
+            raise Exception("ja esta cadastrado")
+        else:
+            self.atividades.append(atividade)
 
     def validar_data_evento(self,data_inicio,data_fim):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
 
-
-class TagEvento(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-
-
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
 
-
-class Apoio(models.Model):
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
-    tipo_de_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
-
-
 class ApoioEvento(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
-    apoio = models.ForeignKey(Apoio, on_delete=models.CASCADE)
+    instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
+    tipo_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
 
 
 class Atividade(models.Model):
