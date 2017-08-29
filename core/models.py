@@ -37,12 +37,23 @@ class TipoAtividade(Enum):
     MINICURSO = 2
     MESAREDONDA = 3
 
+
+class TipoInscricaoEvento(Enum):
+    AUTOMATICO = 0
+    MANUAL = 1
+
 #CLASSES MODELO
 
 
 class Tag(models.Model):
     nome = models.CharField(max_length=20)
-    #TODO tag many to many
+
+
+class Local(models.Model):
+    nome = models.CharField(max_length=30)
+    longradouro = models.CharField(max_length=30)
+    numero = models.DecimalField("numero", max_digits=4, decimal_places=1)
+
 
 class Evento(models.Model):
     titulo = models.CharField(max_length=45)
@@ -52,6 +63,9 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
+    local = models.ForeignKey(Local, on_delete=models, default='')
+    tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
+    valor = models.FloatField()
 
     def adicionar_atividade_evento(self,atividade):
         if atividade in self.atividades:
@@ -63,9 +77,11 @@ class Evento(models.Model):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
 
+
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
+
 
 class ApoioEvento(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
