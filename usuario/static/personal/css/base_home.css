@@ -1,5 +1,182 @@
-#options_bar{
-    height:80px;
-    width:100%;
-    backgroud-color:#212121;
+#top_bar{
+    height: 100px;
+    padding: 0px;
+}
+
+.component_bar{
+    height: 100px;
+}
+
+#div_pesquisa{
+    height: 50px;
+    margin-top: 25px;
+    padding:0px;
+}
+
+#entrada_tag{
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px 0px 0px 5px;
+    background-color: #FFF;
+}
+
+#entrada_btn{
+    border: none;
+    height: 100%;
+    background-color: #1b5e20;
+    border-radius: 0px 5px 5px 0px;
+}
+
+#img_pesquisa{
+    height: 30px;
+    width: 30px;
+    margin-top: 5px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+#botao_lista_eventos{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#botao_lista_inscricoes{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+/* altera o holder da caixa de pesquisa*/
+::-webkit-input-placeholder {
+   color: #000;
+   font-size: 16px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #000;
+   font-size: 16px;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #000;
+   font-size: 16px;
+}
+
+:-ms-input-placeholder {
+   color: #000;
+   font-size: 16px;
+}
+
+/**/
+
+#btn_eventos{
+    padding: 0px;
+}
+
+#botao_lista_eventos{
+    border:0px;
+    margin-top: 5%;
+    height: 80%;
+    width: 100%;
+    border-left: 2px solid #00838f;
+    margin-left: #000;
+}
+
+#btn_inscricoes{
+    padding: 0px;
+}
+
+#botao_lista_inscricoes{
+    border:0px;
+    margin-top: 5%;
+    height: 80%;
+    width: 100%;
+    border-left: 2px solid #00838f;
+}
+
+#area_user{
+    padding: 0px;
+    display: inline-block;
+}
+
+#botao_area_user{
+    border:0px;
+    padding: 0px;
+    margin-top: 5%;
+    height: 80%;
+    width: 100%;
+    border-left: 2px solid #00838f;
+    display: inline-block;
+}
+
+#img_user{
+    margin-top: 10%;
+    margin-left: 30%;
+    height: 60%;
+}
+
+#botao_sair{
+    margin-top: 20%;
+    height: 30%;
+    width: 20%;
+    float:right;
+    display: inline-block;
+}
+
+/*a partir dqui eh o body da home*/
+#body_main{
+    height: auto;
+    padding: 0px;
+}
+
+#div_content_main{
+    padding:0px;
+}
+
+.components_main{
+    height: 500px;
+    padding: 0px;
+}
+
+.btns_left{
+    font-size: 20px;
+    height: 70px;
+    border-bottom: 1px solid #AAA;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.btns_left img{
+    float: right;
+    height: 40px;
+    margin-top: 15px;
+}
+
+.btns_left:hover{
+    background-color: #e1f5fe;
+}
+
+.components_create_event{
+    display: inline-block;
+}
+
+#lateral_left_home{
+    padding: 0px;
+    height: auto;
+}
+
+#meio_home{
+    height: auto;
+    margin-top: 0px;
+}
+
+#buttom_left_create_event{
+    display: inline-block;
+}
+
+#buttom_left_user_profile{
+    text-transform: uppercase;
 }

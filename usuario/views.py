@@ -17,10 +17,10 @@ def registrar(request):
             usuario = form.save()
             return redirect("base/login.html")
         else:
-            return render(request, "base/cadastrar.html", {'form': form})
+            return render(request, "base/cadastrar_user.html", {'form': form})
     else:
         form = CadastrarForm()
-    return render(request, "base/cadastrar.html", {'form': form})
+    return render(request, "base/cadastrar_user.html", {'form': form})
 
 @login_required()
 def home(request):

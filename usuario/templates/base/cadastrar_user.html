@@ -2,14 +2,15 @@
 {% load static %}
 <html>
 <head>
-	<title>Event_On | Login</title>
+	<meta charset="utf-8">
+	<title>Event_On | Cadastro</title>
 	{% include "headerbase.html" %}
-	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'personal/css/cadastro_user.css' %}">
 </head>
 <body background="{% static 'personal/images/evento.jpg' %}">
 	<div class="fullscreen">
 		<div class="row">
-			<div class="col m12 z-depth-4 cyan darken-1" id="top_bar">
+			<div class="row col m12 z-depth-4 cyan darken-1" id="top_bar">
 
 				<div class="col m5"></div>
 				<div class="col m2 black" id="logo">
@@ -24,15 +25,15 @@
 			<div class="col m4">
 			</div>
 			<div class="col m4 z-depth-5" id="login_div">
-				<h4 class="center-align light-blue-text darken-4" id="texto_login">Entre e tenha acesso à nossos serviços</h4>
+				<h4 class="left-align light-blue-text darken-4" id="texto_login">Registre-se, é grátis e sempre será!</h4>
 
 					<form method="POST" class="form_login">
 						<div class="row">
 							{% csrf_token %}
 							{{ form.as_p }}
 							<div class="input-field col m12">
-								<button class="waves-effect waves-light cyan darken-1 btn col m12 m-btn" id="button_login" type="submit">ENTRAR</button>
-								<p class="center-align" id="texto_cadastre_se">Ainda não é cadastrado? <a href="{% url 'cadastrar' %}">Cadastre-se</a></p>
+								<button class="waves-effect waves-light cyan darken-1 btn col m12 m-btn" id="button_login" type="submit">CADASTRAR</button>
+								<p class="center-align" id="texto_cadastre_se">Já é cadastrado? <a href="{% url 'login' %}">Entre</a></p>
 							</div>
 						</div>
 					</form>
