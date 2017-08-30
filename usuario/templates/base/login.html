@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-	<title>Event_On | Login</title>
+	<title>ICARUS | Login</title>
 	{% include "headerbase.html" %}
 	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/login.css' %}">
 </head>
@@ -24,6 +24,9 @@
 			<div class="col m4">
 			</div>
 			<div class="col m4 z-depth-5" id="login_div">
+				{% if form.errors %}
+					<p>Your username and password didn't match. Please try again.</p>
+				{% endif %}
 				<h4 class="center-align light-blue-text darken-4" id="texto_login">Entre e tenha acesso à nossos serviços</h4>
 
 					<form method="POST" class="form_login">

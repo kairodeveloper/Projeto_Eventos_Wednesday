@@ -45,8 +45,8 @@ class Tag(models.Model):
     #TODO tag many to many
 
 class Evento(models.Model):
-    titulo = models.CharField(max_length=45)
-    descricao = models.CharField(max_length=200)
+    titulo = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=500)
     administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE, related_name='eventos_criados')
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.OUTROS)
     dt_inicio = models.DateField()

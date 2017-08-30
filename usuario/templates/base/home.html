@@ -2,14 +2,14 @@
 {% load static %}
 <html>
 <head>
-	<title>Event_On | Home</title>
+	<title>ICARUS | Home</title>
 	{% include "headerbase.html" %}
 	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/base_home.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/base_home.js' %}">
 
 	<script>
 
-		function call_counter(url){
+		function call_page(url){
  		   window.location.href = url;
 		}
 
@@ -19,14 +19,14 @@
 <body>
 	<div class="fullscreen blue-grey lighten-5">
 		<div class="row">
-			<div class="col m12 z-depth-4 cyan darken-1" id="top_bar">
+			<div class="col m12 z-depth-4 teal lighten-2" id="top_bar">
 				<div class="col m1"></div>
 				<div class="col m1 black component_bar"></div>
 				<div class="col m1 component_bar"></div>
 
 				<div class="col m3 row component_bar" id="div_pesquisa">
 
-					<input class="col m10" id="entrada_tag" placeholder="Pesquise eventos em nossa plataforma..."></input>
+					<input class="col m10" id="entrada_tag" placeholder="Pesquise eventos em nossa plataforma..."/>
 					<button class="col m2" id="entrada_btn">
 						
 						<img class="center-align" id="img_pesquisa" onclick="" src="{% static 'personal/images/pesquisa.png' %}">
@@ -37,15 +37,15 @@
 
 				<div class="col m2 component_bar"></div>
 				<div class="col m1 component_bar" id="btn_eventos">
-					<button class="cyan darken-1 white-text" onclick="call_counter('https://google.com')" id="botao_lista_eventos">Meus Eventos</button>
+					<button class="teal lighten-2 white-text" onclick="" id="botao_lista_eventos">Meus Eventos</button>
 				</div>
 
 				<div class="col m1 component_bar" id="btn_inscricoes">
-					<button class="cyan darken-1 white-text btns_top" id="botao_lista_inscricoes">Minhas Inscrições</button>
+					<button class="teal lighten-2 white-text btns_top" id="botao_lista_inscricoes">Minhas Inscrições</button>
 				</div>
 
 				<div class="col m1 component_bar" id="area_user">
-					<div class="left-align cyan darken-1 btns_top" id="botao_area_user">
+					<div class="left-align teal lighten-2 btns_top" id="botao_area_user">
 						<img class="white" id="img_user" src="{% static 'personal/images/default.png' %}">
 						<img id="botao_sair" src="{% static 'personal/images/exit.png' %}">
 					</div>
@@ -62,7 +62,7 @@
 				<div class="col m1"></div>
 				<div class="col m2 white z-depth-1 components_main" id="lateral_left_home">
 
-					<div class="col m12 btns_left btn waves-effect waves-teal" onclick="" id="buttom_left_create_event">
+					<div class="col m12 btns_left btn waves-effect waves-teal" onclick="call_page('{% url 'novo_evento' %}')" id="buttom_left_create_event">
 
 						<p class="components_create_event">CRIAR EVENTO</p>
 						<img class="components_create_event" src="{% static 'personal/images/plus.png' %}">
@@ -88,8 +88,31 @@
 
 				<div class="col m1"></div>
 
-				<div class="col m7 black components_main" id="meio_home">
+				<div class="col m7 components_main" id="meio_home">
+					{% for evento in eventos %}
 
+						<div class="col m8 teal z-depth-1" id="div_evento">
+
+							<div class="col m12" id="superior_div_evento">
+
+								<div class="col m6 components_div_evento" id="titulo_descricao">
+
+									<p id="titulo_div_evento"> {{ evento.titulo }} </p>
+									<p id="descricao_div_evento"> {{ evento.descricao }} </p>
+
+								</div>
+								<div class="col m6 components_div_evento white" id="imagem_evento">
+									
+									<img style="height: 100%; width: 100%;" src="{% static 'personal/images/tipos_de_evento/outros.jpg' %}">
+									
+								</div>
+
+							</div>
+							<div class="col m12 white" id="inferior_div_evento"></div>
+
+						</div>
+
+					{% endfor %}
 				</div>
 
 				<div class="col m1"></div>
