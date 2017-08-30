@@ -43,13 +43,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    def criar_evento(self,titulo,descricao,tipo_evento,data_inicio, data_fim):
+    def criar_evento(self, titulo, descricao, tipo_evento, data_inicio, data_fim):
         evento = core_models.Evento(titulo=titulo, descricao=descricao, tipo_evento=tipo_evento, dt_inicio=data_inicio, dt_fim=data_fim, administrador=self)
         evento.save()
 
     def listar_evento(self):
-        eventos = core_models.Evento.objects.filter(administrador=self)
-        return eventos
+        return self.eventos_criados.all()
 
 
     USERNAME_FIELD = 'nomedeusuario'

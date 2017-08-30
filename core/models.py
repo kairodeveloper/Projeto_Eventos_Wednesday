@@ -42,6 +42,16 @@ class TipoInscricaoEvento(Enum):
     AUTOMATICO = 0
     MANUAL = 1
 
+
+class TipoLazer(Enum):
+    DEFAULT = 0
+    COFFEBREAK = 1
+
+
+class Checked(Enum):
+    CHECKADO = 0
+    NAO_CHECKADO = 1
+
 #CLASSES MODELO
 
 
@@ -77,6 +87,9 @@ class Evento(models.Model):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
 
+    def equipe(self):
+        return Evento.equipe
+
 
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
@@ -89,13 +102,47 @@ class ApoioEvento(models.Model):
     tipo_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
 
 
+class EspacoFisico(models.Model):
+    nome = models.CharField(max_length=30)
+    lotacao = models.DecimalField("lotacao", max_digits=4, decimal_places=1)
+
+
+class Responsavel(models.Model):
+    nome = models.CharField(max_length=30)
+    descricao = models.CharField(max_length=150)
+    paginas = List = []
+    #tipo_responsabilidade = EnumField(TipoResponsabilidade, default=)
+
+
+class Check_in(models.Model):
+    item_inscricao = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
+    checkado = EnumField(Checked, default=Checked.NAO_CHECKADO)
+
+
+class Trilha(models.Model):
+    tema = models.CharField(max_length=40)
+    coordenador = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
+
+
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
+    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related="atividade_inscrita")
+    #trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE)
+
+
+class AtividadeInscrita(Atividade):
+    responsavel = models.ForeignKey(Responsavel, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=150)
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="atividades")
+
+
+class AtividadeLazer(Atividade):
+    dt_inicio = models.DateField()
+    dt_fim = models.DateField()
+    tipo_lazer = EnumField(TipoLazer, default=TipoLazer.DEFAULT)
 
 
 class Cupom(models.Model):
@@ -135,6 +182,7 @@ class Cupom(models.Model):
 
 class Pagamento(models.Model):
     datapagamento = models.DateField()
+    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
     def realizar_pagamento(self, valor_pagamento):
         if valor_pagamento >= self.inscricao.valor:
