@@ -7,5 +7,8 @@ from django.contrib.auth.models import User
 admin.site.register(Atividade)
 admin.site.register(Evento)
 admin.site.register(Cupom)
+admin.site.register(Local)
 admin.site.register(Instituicao)
 admin.site.register(ApoioEvento)
+admin.site.register(Pagamento)
+admin.site.register(EspacoFisico)

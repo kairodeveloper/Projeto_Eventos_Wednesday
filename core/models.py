@@ -47,11 +47,6 @@ class TipoLazer(Enum):
     DEFAULT = 0
     COFFEBREAK = 1
 
-
-class Checked(Enum):
-    CHECKADO = 0
-    NAO_CHECKADO = 1
-
 #CLASSES MODELO
 
 
@@ -73,7 +68,7 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
-    local = models.ForeignKey(Local, on_delete=models, default='')
+    local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
     tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
     valor = models.FloatField()
 
@@ -115,8 +110,10 @@ class Responsavel(models.Model):
 
 
 class Check_in(models.Model):
-    item_inscricao = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
-    checkado = EnumField(Checked, default=Checked.NAO_CHECKADO)
+    hora = models.TimeField('hora', blank=True, null=False, default="00:00")
+    data = models.DateField('Data de entrada', auto_now_add=True)
+    gerente = models.ForeignKey('usuario.Funcionario', related_name='gerente', )
+    checked = models.BooleanField(default=False)
 
 
 class Trilha(models.Model):
@@ -126,8 +123,9 @@ class Trilha(models.Model):
 
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
-    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related="atividade_inscrita")
-    #trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE)
+    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades')
+    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE)
 
 
 class AtividadeInscrita(Atividade):
@@ -136,7 +134,6 @@ class AtividadeInscrita(Atividade):
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="atividades")
 
 
 class AtividadeLazer(Atividade):
@@ -182,7 +179,7 @@ class Cupom(models.Model):
 
 class Pagamento(models.Model):
     datapagamento = models.DateField()
-    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
+#    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
     def realizar_pagamento(self, valor_pagamento):
         if valor_pagamento >= self.inscricao.valor:
