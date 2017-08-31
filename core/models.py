@@ -135,17 +135,17 @@ class Trilha(models.Model):
     coordenador = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
 
     def atividades(self):
-        pass
+        return self.atividades
 
-    def coordenador(self):
-        pass
+    def get_coordenador(self):
+        return self.coordenador
 
 
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
     espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades')
-    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE)
+    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
 
 
 class AtividadeInscrita(Atividade):
@@ -155,8 +155,8 @@ class AtividadeInscrita(Atividade):
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
 
-    def responsavel(self):
-        pass
+    def get_responsavel(self):
+        return self.responsavel
 
 
 class AtividadeLazer(Atividade):
