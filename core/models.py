@@ -70,7 +70,6 @@ class Evento(models.Model):
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
     local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
     tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
-    evento = models.ForeignKey('Evento', on_delete=models.CASCADE, related_name='evento_satelite', default='')
     valor = models.FloatField()
 
     def adicionar_atividade_incrita(self, titulo, local, trilha, responsavel, descricao, valor, data, tipo_atividade):
@@ -84,9 +83,6 @@ class Evento(models.Model):
     def equipe(self):
         return self.equipe
 
-    def sub_eventos(self, evento):
-        self.evento = evento
-
     def get_valor(self):
         return self.valor
 
@@ -99,6 +95,10 @@ class Evento(models.Model):
 
     def get_atividades(self):
         return self.atividades
+
+
+class Sub_evento(models.Model):
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='evento_satelite', default='')
 
 
 class Instituicao(models.Model):
