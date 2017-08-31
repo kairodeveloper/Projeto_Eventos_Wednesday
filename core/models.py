@@ -70,20 +70,35 @@ class Evento(models.Model):
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
     local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
     tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
+    evento = models.ForeignKey('Evento', on_delete=models.CASCADE, related_name='evento_satelite', default='')
     valor = models.FloatField()
 
-    def adicionar_atividade_evento(self,atividade):
-        if atividade in self.atividades:
-            raise Exception("ja esta cadastrado")
-        else:
-            self.atividades.append(atividade)
+    def adicionar_atividade_incrita(self, titulo, local, trilha, responsavel, descricao, valor, data, tipo_atividade):
+        atividade = Atividade(titulo=titulo, local=local, evento=self, responsavel=responsavel, descricao=descricao, valor=valor, data=data, tipo_atividade=tipo_atividade)
+        atividade.save()
 
-    def validar_data_evento(self,data_inicio,data_fim):
+    def validar_data_evento(self, data_inicio, data_fim):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
 
     def equipe(self):
-        return Evento.equipe
+        return self.equipe
+
+    def sub_eventos(self, evento):
+        self.evento = evento
+
+    def get_valor(self):
+        return self.valor
+
+    def apoio_realizacao(self):
+        return self.apoio_evento
+
+    def add_apoio_realizacao(self, instituicao, tipo_apoio):
+        apoio = ApoioEvento(evento=self, instituicao=instituicao, tipo_apoio=tipo_apoio)
+        apoio.save()
+
+    def get_atividades(self):
+        return self.atividades
 
 
 class Instituicao(models.Model):
@@ -92,9 +107,15 @@ class Instituicao(models.Model):
 
 
 class ApoioEvento(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='apoio_evento')
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
+
+    def evento(self):
+        pass
+
+    def instituicao(self):
+        pass
 
 
 class EspacoFisico(models.Model):
@@ -115,10 +136,19 @@ class Check_in(models.Model):
     gerente = models.ForeignKey('usuario.Funcionario', related_name='gerente', )
     checked = models.BooleanField(default=False)
 
+    def atividade_checkada(self):
+        pass
+
 
 class Trilha(models.Model):
     tema = models.CharField(max_length=40)
     coordenador = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
+
+    def atividades(self):
+        pass
+
+    def coordenador(self):
+        pass
 
 
 class Atividade(models.Model):
@@ -134,6 +164,9 @@ class AtividadeInscrita(Atividade):
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+
+    def responsavel(self):
+        pass
 
 
 class AtividadeLazer(Atividade):
