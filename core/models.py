@@ -111,11 +111,11 @@ class ApoioEvento(models.Model):
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
 
-    def evento(self):
-        pass
+    def get_evento(self):
+        return self.evento
 
-    def instituicao(self):
-        pass
+    def get_instituicao(self):
+        return self.instituicao
 
 
 class EspacoFisico(models.Model):
@@ -128,16 +128,6 @@ class Responsavel(models.Model):
     descricao = models.CharField(max_length=150)
     paginas = List = []
     #tipo_responsabilidade = EnumField(TipoResponsabilidade, default=)
-
-
-class Check_in(models.Model):
-    hora = models.TimeField('hora', blank=True, null=False, default="00:00")
-    data = models.DateField('Data de entrada', auto_now_add=True)
-    gerente = models.ForeignKey('usuario.Funcionario', related_name='gerente', )
-    checked = models.BooleanField(default=False)
-
-    def atividade_checkada(self):
-        pass
 
 
 class Trilha(models.Model):
