@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ICARUS | {{evento.titulo|upper}} </title>
+	{% include "headerbase.html" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'personal/css/evento.css' %}">
+</head>
+<body>
+	<div class="fullscreen">
+        <!-- barra superior -->
+        <div class="row z-depth-4 teal lighten-1" id="top_bar">
+
+            <div class="col m1"></div>
+
+            <div class="col m1" id="div_logo">
+
+            </div>
+
+            <div class="col m1"></div>
+
+            <div class="col m6" id="nome_evento">
+
+                <p>{{evento.titulo|upper}}</p>
+
+            </div>
+
+            <div class="col m1"></div>
+
+            <div class="col m1" id="div_fim_inscricao">
+
+                <button class="teal lighten-1 ">Finalizar Inscrição</button>
+
+            </div>
+
+            <div class="col m1"></div>
+
+        </div>
+
+        <!-- conteudo -->
+
+
+	</div>
+</body>
+</html>

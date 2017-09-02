@@ -8,10 +8,19 @@ h1{
     color: #00acc1;
 }
 
+h2{
+    font-family: sans-serif;
+    color: #00acc1;
+}
+
 h3{
     font-family: sans-serif;
     color: #00acc1;
     margin-bottom: 20px;
+}
+
+label{
+    font-size: 16px;
 }
 
 #top_bar{
@@ -21,128 +30,85 @@ h3{
 }
 
 #div_form{
-    margin: auto;
-    padding: 10px;
-    margin-top: 25px;
-    background-color: #FFF;
-    width:30%;
-    border: 2px solid #CCC;
-    height:700px;
+    padding: 0px;
+    margin-top: 50px;
 }
 
-#top_bar_logo{
-    height: 100%;
-    width: 10%;
-    background-color: #000;
+#menu_direito{
+    margin-top: 50px;
 }
 
-.input_normal{
-    height: 80px;
-    width: 100%;
-    margin-bottom: 20px;
+#date_div_in{
+    padding-left: 0px;
 }
 
-.input_normal p{
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #555 ;
-    font-weight: bold;
+#date_div_out{
+    padding-right: 0px;
 }
 
-.input_normal input{
-    background: #FFF;
-    border:none;
-    border-bottom: 2px solid #4db6ac;
-    height: 40px;
-    width: 98%;
-    font-size: 16px;
-    color: #000;
-    padding:5px;
+.lista_lateral_direita{
+    padding: 0px;
+    padding-top: 10px;
 }
 
-.input_maior{
-    height: auto;
-    width: 100%;
-    margin-bottom: 20px;
+.div_btn_add{
+    margin-top: 10px;
 }
 
-.input_maior textarea{
-    background-color: #FFF;
-    border:2px solid #4db6ac;
-    width: 97.5%;
-    height: 150px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: #000;
-    font-size: 16px;
+.object_title{
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.input_maior p{
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #555 ;
-    font-weight: bold;
-}
-
-.input_tipo{
-    height: auto;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.input_tipo select{
-    background-color: #FFF;
-    border: 1px solid #4db6ac;
-    color: #000;
-    font-size: 16px;
-}
-
-.input_tipo p{
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #555 ;
-    font-weight: bold;
-}
-
-.input_date{
-    height: auto;
-    width: 49.5%;
-    margin-bottom: 20px;
-    display: inline-block;
-}
-
-.input_date input{
-    background-color: #FFF;
-    border: 2px solid #4db6ac;
-    height: 40px;
-    width: 60px;
-    text-align: center;
-    color: #000;
-    font-size: 16px;
-}
-
-.input_date p{
-    font-size: 14px;
-    font-family: sans-serif;
-    color: #555 ;
-    font-weight: bold;
-}
-
-.button_submit_new_event{
-    height: auto;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.button_submit_new_event button{
-    background-color: #4db6ac;
+.btn_add{
+    height:50px;
     border: none;
-    color: #000;
-    height: 40px;
-    width: 80%;
-    color: #FFF;
-    font-size: 16px;
-    font-family: sans-serif;
-    margin-top: 70px;
-    margin-left: 10%;
+}
+
+
+
+/*titulo*/
+#titulo_page{
+    padding: 0px;
+}
+
+#div_titulo{
+    margin-top: -20px;
+}
+
+/*menu superior*/
+.component_top_bar{
+    height: 100%;
+}
+
+#div_back_home{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#div_eventos{
+    padding-left: 0px;
+}
+
+#btn_voltar_home{
+    height:80%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+}
+
+#btn_meus_eventos{
+    height:80%;
+    width: 100%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    border-right: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
 }

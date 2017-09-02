@@ -17,3 +17,17 @@ class CadastrarForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['nomedeusuario', 'email']
+
+
+class CadastrarEventoForm(forms.ModelForm):
+
+    class Meta:
+        model = Evento
+        fields = ['titulo','descricao','tipo_evento']
+
+
+class CadastrarInstituicaoForm(forms.ModelForm):
+
+    class Meta:
+        model = Instituicao
+        fields = ['endereco', 'descricao']

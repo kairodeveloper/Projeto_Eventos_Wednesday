@@ -13,13 +13,15 @@
  		   window.location.href = url;
 		}
 
+
+
 	</script>
 
 </head>
 <body>
 	<div class="fullscreen blue-grey lighten-5">
 		<div class="row">
-			<div class="col m12 z-depth-4 teal lighten-2" id="top_bar">
+			<div class="col m12 z-depth-4 teal lighten-1" id="top_bar">
 				<div class="col m1"></div>
 				<div class="col m1 black component_bar"></div>
 				<div class="col m1 component_bar"></div>
@@ -37,17 +39,18 @@
 
 				<div class="col m2 component_bar"></div>
 				<div class="col m1 component_bar" id="btn_eventos">
-					<button class="teal lighten-2 white-text" onclick="" id="botao_lista_eventos">Meus Eventos</button>
+					<button class="teal lighten-1 white-text" onclick="" id="botao_lista_eventos">MEUS EVENTOS</button>
 				</div>
 
 				<div class="col m1 component_bar" id="btn_inscricoes">
-					<button class="teal lighten-2 white-text btns_top" id="botao_lista_inscricoes">Minhas Inscrições</button>
+					<button class="teal lighten-1 white-text btns_top" id="botao_lista_inscricoes">MINHAS INSCRIÇÕES</button>
 				</div>
 
 				<div class="col m1 component_bar" id="area_user">
-					<div class="left-align teal lighten-2 btns_top" id="botao_area_user">
-						<img class="white" id="img_user" src="{% static 'personal/images/default.png' %}">
-						<img id="botao_sair" src="{% static 'personal/images/exit.png' %}">
+					<div class="left-align teal lighten-1 btns_top" id="botao_area_user">
+						<button class="left-align teal lighten-1" id="btn_sair" onclick="call_page('{% url 'logout' %}')">
+							<img id="img_user" src="{% static 'personal/images/exit.png' %}">
+						</button>
 					</div>
 
 				</div>
@@ -95,20 +98,26 @@
 
 							<div class="col m12" id="superior_div_evento">
 
-								<div class="col m6 components_div_evento" id="titulo_descricao">
+								<div class="col m8 components_div_evento" id="titulo_descricao">
 
 									<p id="titulo_div_evento"> {{ evento.titulo }} </p>
 									<p id="descricao_div_evento"> {{ evento.descricao }} </p>
 
 								</div>
-								<div class="col m6 components_div_evento white" id="imagem_evento">
+								<div class="col m4 components_div_evento white" id="imagem_evento">
 									
 									<img style="height: 100%; width: 100%;" src="{% static 'personal/images/tipos_de_evento/outros.jpg' %}">
 									
 								</div>
 
 							</div>
-							<div class="col m12 white" id="inferior_div_evento"></div>
+							<div class="col m12 white" id="inferior_div_evento">
+
+								<p id="tags_inscreva_se">Aqui aparecerão as tags</p>
+								<!--<p>{{ evento.id }}</p>-->
+								<button class="btn waves-effect waves-teal" onclick="call_page('{% url 'page_evento' evento.id %}')" id="botao_inscreva_se">Acesse a página do evento</button>
+
+							</div>
 
 						</div>
 

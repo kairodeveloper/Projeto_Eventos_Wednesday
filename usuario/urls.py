@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^cadastrar/$', registrar, name="cadastrar"),
     url(r'^home/$', home, name="home"),
     url(r'^novo-evento/$', criar_evento, name="novo_evento"),
+    url(r'^inscreva-se/evento/(\d+)/$', page_evento, name="page_evento"),
     url(r'^', login, {'template_name': 'base/login.html'}, name="login"),
     url(r'^logout/', logout, {'template_name': 'base/login.html'}, name="logout"),
 ]

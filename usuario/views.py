@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from .forms import *
+import re
 # Create your views here.
 
 
@@ -33,42 +34,52 @@ def home(request):
 def criar_evento(request):
     administrador = request.user
 
-    if request.method == 'POST':
+    if request.method=='POST':
+        form = CadastrarEventoForm(request.POST)
+        data_inicio = recebe_data(request.POST.get('data_in'))
+        data_fim = recebe_data(request.POST.get('data_out'))
 
-        titulo = request.POST.get('titulo_evento','titulo not found')
-        descricao = request.POST.get('descricao_evento','descricao not found')
-        tipo_recebido = request.POST.get('tipo', 'tipo not found')
+        if form.is_valid():
+            administrador.criar_evento(titulo=form.cleaned_data['titulo'],
+                                       descricao=form.cleaned_data['descricao'],
+                                       tipo_evento=form.cleaned_data['tipo_evento'],
+                                       data_inicio=data_inicio,
+                                       data_fim=data_fim)
 
-        dia_inicio = request.POST.get('date_evento_in_day','dia in not found')
-        mes_inicio = request.POST.get('date_evento_in_month','dia in not found')
-        ano_inicio = request.POST.get('date_evento_in_year','dia in not found')
-        inicio = str(ano_inicio)+"-"+str(mes_inicio)+"-"+str(dia_inicio)
+            eventos = Evento.objects.all()
+            return render(request,"base/home.html", {'eventos': eventos,'msg':'Evento Criado'})
 
-        dia_fim = request.POST.get('date_evento_out_day','dia out not found')
-        mes_fim = request.POST.get('date_evento_out_month','dia out not found')
-        ano_fim = request.POST.get('date_evento_out_year','dia out not found')
-        fim = str(ano_fim)+"-"+str(mes_fim)+"-"+str(dia_fim)
+    else:
+        apoios = [ ]
+        form = CadastrarEventoForm()
+        form2 = CadastrarInstituicaoForm()
+        teste = ["kairo","kairo","kairo","kairo","kairo"]
+
+    return render(request, "base/cadastrar_evento.html",{'form': form, 'form2':form2,'teste':teste})
 
 
-        tipo_evento = 0
+def page_evento(request, id_recebido):
+    evento = Evento.objects.get(id=id_recebido)
+    return render(request, "base/evento.html", {'evento' : evento})
 
-        if(tipo_recebido==1):
-            tipo_evento = TipoEvento.SEMANA_CIENTIFICA
-        elif (tipo_recebido == 2):
-            tipo_evento = TipoEvento.PALESTRA
-        elif (tipo_recebido == 3):
-            tipo_evento = TipoEvento.CICLO_DE_PALESTRAS
-        elif (tipo_recebido == 4):
-            tipo_evento = TipoEvento.SIMPOSIO
-        elif (tipo_recebido == 5):
-            tipo_evento = TipoEvento.JORNADA
-        elif (tipo_recebido == 6):
-            tipo_evento = TipoEvento.SEMANA_CIENTIFICA
-        else:
-            tipo_evento = TipoEvento.OUTROS
 
-        administrador.criar_evento(titulo=titulo,descricao=descricao,tipo_evento=tipo_evento,data_inicio=inicio, data_fim=fim)
-        eventos = Evento.objects.all()
-        return render(request, "base/home.html", {'eventos':eventos})
+#funcao: recebe o formato de data do materialize e converte para o formato do django
+def recebe_data(sequencia):
+    inicio = re.findall('(?P<Dia>[0]*[1-9]|[1-2][0-9]|[3][0-1])\s(?P<Mes>[A-Z][a-z]+),\s(?P<Ano>\d{4})', sequencia)
+    meses_validos = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    dia = ""
+    mes = ""
+    ano = ""
 
-    return render(request, "base/cadastrar_Evento.html")
+    for i in range(len(meses_validos)-1):
+        if (inicio[0][1] == meses_validos[i]):
+            if (i >= 0 and i < 10):
+                mes = "0" + str(i + 1)
+
+            else:
+                mes = str(i + 1)
+
+    dia = inicio[0][0]
+    ano = inicio[0][2]
+    return ano + "-" + mes + "-" + dia
+
