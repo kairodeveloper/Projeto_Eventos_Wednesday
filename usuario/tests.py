@@ -1,6 +1,7 @@
 import unittest
 import core.models as core_models
 from usuario.models import *
+
 from django.db import models
 
 

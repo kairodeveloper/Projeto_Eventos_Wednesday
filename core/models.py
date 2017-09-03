@@ -37,12 +37,28 @@ class TipoAtividade(Enum):
     MINICURSO = 2
     MESAREDONDA = 3
 
+
+class TipoInscricaoEvento(Enum):
+    AUTOMATICO = 0
+    MANUAL = 1
+
+
+class TipoLazer(Enum):
+    DEFAULT = 0
+    COFFEBREAK = 1
+
 #CLASSES MODELO
 
 
 class Tag(models.Model):
     nome = models.CharField(max_length=20)
-    #TODO tag many to many
+
+
+class Local(models.Model):
+    nome = models.CharField(max_length=30)
+    longradouro = models.CharField(max_length=30)
+    numero = models.DecimalField("numero", max_digits=4, decimal_places=1)
+
 
 class Evento(models.Model):
     titulo = models.CharField(max_length=45)
@@ -52,34 +68,101 @@ class Evento(models.Model):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     estado_evento = EnumField(EstadoEvento, default=EstadoEvento.ABERTO)
+    local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
+    tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
+    valor = models.FloatField()
 
-    def adicionar_atividade_evento(self,atividade):
-        if atividade in self.atividades:
-            raise Exception("ja esta cadastrado")
-        else:
-            self.atividades.append(atividade)
+    def adicionar_atividade_incrita(self, titulo, local, trilha, responsavel, descricao, valor, data, tipo_atividade):
+        atividade = Atividade(titulo=titulo, local=local, evento=self, responsavel=responsavel, descricao=descricao, valor=valor, data=data, tipo_atividade=tipo_atividade)
+        atividade.save()
 
-    def validar_data_evento(self,data_inicio,data_fim):
+    def validar_data_evento(self, data_inicio, data_fim):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
+
+    def equipe(self):
+        return self.equipe
+
+    def get_valor(self):
+        return self.valor
+
+    def apoio_realizacao(self):
+        return self.apoio_evento
+
+    def add_apoio_realizacao(self, instituicao, tipo_apoio):
+        apoio = ApoioEvento(evento=self, instituicao=instituicao, tipo_apoio=tipo_apoio)
+        apoio.save()
+
+    def get_atividades(self):
+        return self.atividades
+
+
+class Sub_evento(models.Model):
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='evento_satelite', default='')
+
 
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
 
+
 class ApoioEvento(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='apoio_evento')
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_apoio = EnumField(TipoApoio, default=TipoApoio.APOIO)
+
+    def get_evento(self):
+        return self.evento
+
+    def get_instituicao(self):
+        return self.instituicao
+
+
+class EspacoFisico(models.Model):
+    nome = models.CharField(max_length=30)
+    lotacao = models.DecimalField("lotacao", max_digits=4, decimal_places=1)
+
+
+class Responsavel(models.Model):
+    nome = models.CharField(max_length=30)
+    descricao = models.CharField(max_length=150)
+    paginas = List = []
+    #tipo_responsabilidade = EnumField(TipoResponsabilidade, default=)
+
+
+class Trilha(models.Model):
+    tema = models.CharField(max_length=40)
+    coordenador = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
+
+    def atividades(self):
+        return self.atividades
+
+    def get_coordenador(self):
+        return self.coordenador
 
 
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
+    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades')
+    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
+
+
+class AtividadeInscrita(Atividade):
+    responsavel = models.ForeignKey(Responsavel, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=150)
     valor = models.FloatField()
     data = models.DateField()
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="atividades")
+
+    def get_responsavel(self):
+        return self.responsavel
+
+
+class AtividadeLazer(Atividade):
+    dt_inicio = models.DateField()
+    dt_fim = models.DateField()
+    tipo_lazer = EnumField(TipoLazer, default=TipoLazer.DEFAULT)
 
 
 class Cupom(models.Model):
@@ -119,6 +202,7 @@ class Cupom(models.Model):
 
 class Pagamento(models.Model):
     datapagamento = models.DateField()
+#    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
     def realizar_pagamento(self, valor_pagamento):
         if valor_pagamento >= self.inscricao.valor:

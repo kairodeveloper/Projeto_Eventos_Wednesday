@@ -43,14 +43,12 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    def criar_evento(self,titulo,descricao,tipo_evento,data_inicio, data_fim):
+    def criar_evento(self, titulo, descricao, tipo_evento, data_inicio, data_fim):
         evento = core_models.Evento(titulo=titulo, descricao=descricao, tipo_evento=tipo_evento, dt_inicio=data_inicio, dt_fim=data_fim, administrador=self)
         evento.save()
 
     def listar_evento(self):
-        eventos = core_models.Evento.objects.filter(administrador=self)
-        return eventos
-
+        return self.eventos_criados.all()
 
     USERNAME_FIELD = 'nomedeusuario'
     PASSWORD_FIELD = 'senha'
@@ -67,30 +65,32 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 
 class Inscricao(models.Model):
-    evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
-    solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='inscricoes')
+    solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inscricoes')
     data_inscricao = models.DateTimeField()
     valor = models.DecimalField(max_digits=4, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
     pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
 
-    def adicionar_atividade(self,atividade):
+    def adicionar_atividade(self, atividade):
         if atividade in self.evento.atividades:
             self.atividades.add(atividade)
             self.valor += atividade.valor
         else:
             raise Exception("atividade nao adicionada")
 
-    def aplicar_cupom(self,cupom):
+    def aplicar_cupom(self, cupom):
         if cupom.validade_cupom():
             self.valor -= self.valor*cupom.desconto
         else:
             raise Exception("Cupom nao e valido  ")
 
+    def get_atividades(self):
+        return self.evento.atividades
+
 
 class Item_Inscricao(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE)
-    atividade = models.ForeignKey('core.Atividade', on_delete=models.CASCADE)
+    inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE, related_name='item_inscricao')
+    atividade = models.ForeignKey('core.Atividade', on_delete=models.CASCADE, related_name='item_inscrisao')
     horario = models.TimeField()
-
+    check_in = models.ForeignKey('core.Check_in', on_delete=models.CASCADE, related_name='item_inscricao')
