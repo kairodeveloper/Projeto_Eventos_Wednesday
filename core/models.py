@@ -78,6 +78,10 @@ class Evento(models.Model):
         atividade = Atividade(titulo=titulo, local=local, evento=self, responsavel=responsavel, descricao=descricao, valor=valor, data=data, tipo_atividade=tipo_atividade)
         atividade.save()
 
+    def adicionar_atividade_lazer(self,atividade):
+        atividade.evento = self
+        atividade.save()
+
     def validar_data_evento(self, data_inicio, data_fim):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
@@ -151,17 +155,25 @@ class Trilha(models.Model):
 
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
-    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades')
-    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
 
+    class Meta:
+        abstract = true
 
 class AtividadeInscrita(Atividade):
     responsavel = models.ForeignKey(Responsavel, on_delete=models.CASCADE)
+
     descricao = models.CharField(max_length=150)
+
     valor = models.FloatField()
+
     data = models.DateField()
+
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+
+    trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
+
+    espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
 
     def get_responsavel(self):
         return self.responsavel
@@ -171,6 +183,11 @@ class AtividadeLazer(Atividade):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     tipo_lazer = EnumField(TipoLazer, default=TipoLazer.DEFAULT)
+
+    def validar_data_atividade_lazer(self):
+        if(dt_fim <= dt_inicio):
+            raise Exception("Data final invalida")
+
 
 
 class Cupom(models.Model):
