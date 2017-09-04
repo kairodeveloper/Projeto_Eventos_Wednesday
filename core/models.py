@@ -86,6 +86,10 @@ class Evento(models.Model):
         if data_fim.date() < data_inicio.date():
             raise Exception("Data invalida ")
 
+    def adicionar_a_equipe(self, usuario):
+        funcionario = Funcionario(evento=self, usuario=usuario)
+        funcionario.save()
+
     def equipe(self):
         return self.equipe
 
@@ -102,7 +106,7 @@ class Evento(models.Model):
     def get_atividades(self):
         return self.atividades
 
-    def adicionar_evento_satelite(self,evento):
+    def adicionar_evento_satelite(self, evento):
         evento.evento_principal = self
         evento.save()
 
@@ -112,6 +116,7 @@ class Sub_evento(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE,
                                related_name='eventos_satelites', default='')
 '''
+
 
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
@@ -155,25 +160,21 @@ class Trilha(models.Model):
 
 class Atividade(models.Model):
     titulo = models.CharField(max_length=60)
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades')
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
     class Meta:
-        abstract = true
+        abstract = True
+
 
 class AtividadeInscrita(Atividade):
     responsavel = models.ForeignKey(Responsavel, on_delete=models.CASCADE)
-
     descricao = models.CharField(max_length=150)
-
     valor = models.FloatField()
-
     data = models.DateField()
-
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
-
     trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
-
     espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
+    Atividade.evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades_inscritas')
 
     def get_responsavel(self):
         return self.responsavel
@@ -183,11 +184,11 @@ class AtividadeLazer(Atividade):
     dt_inicio = models.DateField()
     dt_fim = models.DateField()
     tipo_lazer = EnumField(TipoLazer, default=TipoLazer.DEFAULT)
+    Atividade.evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades_lazer')
 
     def validar_data_atividade_lazer(self):
         if(dt_fim <= dt_inicio):
             raise Exception("Data final invalida")
-
 
 
 class Cupom(models.Model):
@@ -195,6 +196,12 @@ class Cupom(models.Model):
     desconto = models.DecimalField("desconto", max_digits=3, decimal_places=2)
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
+
+    def __init__(self, desconto, validade, evento):
+        self.cod_cupom = self._gerar_codigo_cupom()
+        self.desconto = desconto
+        self.validade = validade
+        self.evento = evento
 
     def retornar_desconto(self):
         return self._desconto
@@ -227,13 +234,14 @@ class Cupom(models.Model):
 
 class Pagamento(models.Model):
     datapagamento = models.DateField()
-#    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
+    gestor = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
-    def realizar_pagamento(self, valor_pagamento):
+    def realizar_pagamento(self, gestor, valor_pagamento):
         if valor_pagamento >= self.inscricao.valor:
             self.inscricao.status = self.inscricao.status.PAGO
             self.inscricao.save()
             self.datapagamento = date.today()
+            self.gestor = gestor
             self.save()
         else:
             raise Exception("Pagamento nao efetuado")
