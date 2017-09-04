@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 
-admin.site.register(Atividade)
+admin.site.register(AtividadeInscrita)
+admin.site.register(AtividadeLazer)
 admin.site.register(Evento)
 admin.site.register(Cupom)
 admin.site.register(Local)
