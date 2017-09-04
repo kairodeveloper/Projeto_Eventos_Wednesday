@@ -12,6 +12,12 @@ class EstadoInscricao(Enum):
     PAGO = 1
 
 
+class Tipo_permissao(Enum):
+    DEFAULT = 0
+    DONO = 1
+    COLABORADOR = 2
+
+
 class UsuarioManage(BaseUserManager):
     def _create_user(self, email, senha, **extra_fields):
         if not email:
@@ -64,6 +70,26 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.nomedeusuario
 
 
+class Funcionario(models.Model):
+    evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='equipe')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='equipe')
+    tipo_permmissao = EnumField(Tipo_permissao, default=Tipo_permissao.COLABORADOR)
+
+    def atualizar_pagamento(self, incricao, valor):
+        incricao.pagamento.realizar_pagamento(gestor=self, valor_pagamento=valor)
+
+    def criar_cupom(self, desconto, validade, evento):
+        cupom = Cupom(desconto=desconto, validade=validade, evento=evento)
+        cupom.save()
+
+    def checkar_presenca_atividade(self, nome_atividade, inscricao):
+        lista_atividades = inscricao.get_atividades()
+
+        #for atividdade in lista_atividades:
+        #    if nome_atividade == atividdade.titulo:
+        #        atividdade
+
+
 class Inscricao(models.Model):
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='inscricoes')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inscricoes')
@@ -86,11 +112,26 @@ class Inscricao(models.Model):
             raise Exception("Cupom nao e valido  ")
 
     def get_atividades(self):
-        return self.evento.atividades
+        return self.item_inscricao.atividade
+
+
+class Check_in(models.Model):
+    hora = models.TimeField('hora', blank=True, null=False, default="00:00")
+    data = models.DateField('Data de entrada', auto_now_add=True)
+    gerente = models.ForeignKey('usuario.Funcionario', related_name='gerente', )
+    checked = models.BooleanField(default=False)
+
+    def atividade_checkada(self, atividade):
+        lista_atividades = self.item_inscricao
+        for atividade_inscrita in lista_atividades:
+            if atividade_inscrita.atividade.titulo == atividade.titulo:
+                self.checked = True
+
+        return self.checked
 
 
 class Item_Inscricao(models.Model):
     inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE, related_name='item_inscricao')
-    atividade = models.ForeignKey('core.Atividade', on_delete=models.CASCADE, related_name='item_inscrisao')
+    atividade = models.ForeignKey('core.AtividadeInscrita', on_delete=models.CASCADE, related_name='item_inscrisao')
     horario = models.TimeField()
-    check_in = models.ForeignKey('core.Check_in', on_delete=models.CASCADE, related_name='item_inscricao')
+    check_in = models.ForeignKey(Check_in, on_delete=models.CASCADE, related_name='item_inscricao')
