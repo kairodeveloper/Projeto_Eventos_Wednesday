@@ -71,6 +71,8 @@ class Evento(models.Model):
     local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
     tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
     valor = models.FloatField()
+    evento_principal = models.ForeignKey('self', on_delete=models.CASCADE,
+                                         related_name='eventos_satelites')
 
     def adicionar_atividade_incrita(self, titulo, local, trilha, responsavel, descricao, valor, data, tipo_atividade):
         atividade = Atividade(titulo=titulo, local=local, evento=self, responsavel=responsavel, descricao=descricao, valor=valor, data=data, tipo_atividade=tipo_atividade)
@@ -96,9 +98,15 @@ class Evento(models.Model):
     def get_atividades(self):
         return self.atividades
 
+    def adicionar_evento_satelite(self,evento):
+        evento.evento_principal = self
+        evento.save()
+
+
 
 class Sub_evento(models.Model):
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='evento_satelite', default='')
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE,
+                               related_name='eventos_satelites', default='')
 
 
 class Instituicao(models.Model):
