@@ -66,7 +66,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 class Inscricao(models.Model):
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='inscricoes')
-    solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inscricoes')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inscricoes')
     data_inscricao = models.DateTimeField()
     valor = models.DecimalField(max_digits=4, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
