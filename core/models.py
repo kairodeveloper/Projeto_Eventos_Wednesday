@@ -107,11 +107,11 @@ class Evento(models.Model):
         evento.save()
 
 
-
+'''
 class Sub_evento(models.Model):
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE,
                                related_name='eventos_satelites', default='')
-
+'''
 
 class Instituicao(models.Model):
     endereco = models.CharField(max_length=60)
