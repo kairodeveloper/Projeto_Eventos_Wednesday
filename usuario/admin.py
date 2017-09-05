@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(Inscricao)
 admin.site.register(Usuario)
 admin.site.register(Item_Inscricao)
+admin.site.register(Check_in)
+admin.site.register(Funcionario)
