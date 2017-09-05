@@ -47,6 +47,11 @@ class TipoLazer(Enum):
     DEFAULT = 0
     COFFEBREAK = 1
 
+class TipoResponsabilidade(Enum):
+    PALESTRANTE = 0
+    INSTRUTOR = 1
+    MEDIADOR = 2
+
 #CLASSES MODELO
 
 
@@ -71,7 +76,7 @@ class Evento(models.Model):
     local = models.ForeignKey(Local, on_delete=models.CASCADE, default='')
     tipo_inscricao_evento = EnumField(TipoInscricaoEvento, default=TipoInscricaoEvento.MANUAL)
     valor = models.FloatField()
-    evento_principal = models.ForeignKey('self', on_delete=models.CASCADE,
+    evento_principal = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,
                                          related_name='eventos_satelites')
 
     def adicionar_atividade_incrita(self, titulo, local, trilha, responsavel, descricao, valor, data, tipo_atividade):
@@ -143,13 +148,13 @@ class EspacoFisico(models.Model):
 class Responsavel(models.Model):
     nome = models.CharField(max_length=30)
     descricao = models.CharField(max_length=150)
-    paginas = List = []
-    #tipo_responsabilidade = EnumField(TipoResponsabilidade, default=)
+    paginas = []
+    tipo_responsabilidade = EnumField(TipoResponsabilidade, default=TipoResponsabilidade.MEDIADOR)
 
 
 class Trilha(models.Model):
     tema = models.CharField(max_length=40)
-    coordenador = models.ForeignKey(Item_Inscricao, on_delete=models.CASCADE)
+    coordenador = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
     def atividades(self):
         return self.atividades
@@ -171,6 +176,7 @@ class AtividadeInscrita(Atividade):
     descricao = models.CharField(max_length=150)
     valor = models.FloatField()
     data = models.DateField()
+    horario = models.TimeField('horario', blank=True)
     tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
     trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
     espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
@@ -197,11 +203,8 @@ class Cupom(models.Model):
     validade = models.DateField()
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE)
 
-    def __init__(self, desconto, validade, evento):
+    def __init__(self):
         self.cod_cupom = self._gerar_codigo_cupom()
-        self.desconto = desconto
-        self.validade = validade
-        self.evento = evento
 
     def retornar_desconto(self):
         return self._desconto
