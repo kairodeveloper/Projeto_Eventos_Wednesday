@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ICARUS | {{evento.titulo|upper}}</title>
+    {% include "headerbase.html" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'personal/css/painel_controle_evento.css' %}">
+    <script src="{% static 'personal/js/cadastrar_evento.js' %}"></script>
+
+    <script>
+
+        function call_page(url){
+ 		   window.location.href = url;
+		}
+
+    </script>
+</head>
+<body>
+
+  <!--Top bar-->
+    <div class="row teal lighten-1 z-depth-1" id="top_bar">
+        <div class="col m1"></div>
+        <div class="col m1" id="top_bar_logo"></div>
+        <div class="col m6"></div>
+        <div class="col m1"></div>
+        <div class="col m1 component_top_bar" id="div_back_home">
+
+            <button class="teal lighten-1" onclick="call_page('{% url  'home' %}')" id="btn_voltar_home">
+                <p>VOLTAR PRA HOME</p>
+            </button>
+
+        </div>
+        <div class="col m1 component_top_bar" id="div_eventos">
+
+            <button class="teal lighten-1" id="btn_meus_eventos">
+                <p>MEUS EVENTOS</p>
+            </button>
+
+        </div>
+        <div class="col m1r"></div>
+    </div>
+
+    <!--Titulo-->
+    <div class="row teal dark z-depth-1" id="div_titulo">
+        <div class="col m1"></div>
+        <div class="col m7" id="titulo_page">
+
+            <p id="titulo">PAINEL DE CONTROLE / {{evento.titulo.capitalize}}</p>
+
+        </div>
+        <div class="col m1"></div>
+    </div>
+
+    <!-- Main -->
+
+    <div class="row">
+        <div class="col m1"></div>
+
+        <div class="row col m10 no-padding">
+            <!-- Card-->
+            <div class="col m5 card" id="card_atividades_evento">
+                <div class="row card" id="top_card">
+
+                    <p class="col m11">ATIVIDADES</p>
+
+                    <button class="col m1" id="btn_add_evento" onclick="call_page('{% url 'novas_atividades' evento.id %}')">
+                        
+                        <img src="{% static 'personal/images/plus.png' %}">
+                        
+                    </button>
+
+                </div>
+
+                <div class="card-content" id="content_card">
+                    {% for i in atividades %}
+
+                    <p> {{ i.titulo }} </p>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col m2"></div>
+
+            <!-- Card-->
+            <div class="col m5 card" id="card_atividades_evento">
+                <div class="row card" id="top_card">
+
+                    <p class="col m11">EQUIPE</p>
+
+                    <button class="col m1" id="btn_add_evento">
+
+                        <img src="{% static 'personal/images/plus.png' %}">
+
+                    </button>
+
+                </div>
+
+                <div class="card-content" id="content_card">
+                    {% for i in teste %}
+
+                    <p>{{i}}</p>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+                        <!-- Card-->
+            <div class="col m5 card" id="card_atividades_evento">
+                <div class="row card" id="top_card">
+
+                    <p class="col m11">CUPOMS</p>
+
+                    <button class="col m1" id="btn_add_evento">
+
+                        <img src="{% static 'personal/images/plus.png' %}">
+
+                    </button>
+
+                </div>
+
+                <div class="card-content" id="content_card">
+                    {% for i in teste %}
+
+                    <p>{{i}}</p>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col m2"></div>
+
+            <!-- Card-->
+            <div class="col m5 card" id="card_atividades_evento">
+                <div class="row card" id="top_card">
+
+                    <p class="col m11">APOIOS</p>
+
+                    <button class="col m1" id="btn_add_evento">
+
+                        <img src="{% static 'personal/images/plus.png' %}">
+
+                    </button>
+
+                </div>
+
+                <div class="card-content" id="content_card">
+                    {% for i in teste %}
+
+                    <p>{{i}}</p>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+
+             <!-- Card Inscritos-->
+            <div class="col m12 card" id="card_atividades_evento">
+                <div class="row card" id="top_card">
+
+                    <p class="col m11">INSCRIÇÕES</p>
+
+                    <button class="col m1" id="btn_add_evento">
+
+                        <img src="{% static 'personal/images/plus.png' %}">
+
+                    </button>
+
+                </div>
+
+                <div class="card-content" id="content_card">
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>NOME DO INSCRITO</th>
+                            <th>DATA DA INSCRIÇÃO</th>
+                            <th>VALOR DA INSCRIÇÃO</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for i in users %}
+                        <tr>
+                            <td> {{ i.nomedeusuario }} </td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Pago</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+            </div>
+
+    </div>
+
+    <div class="col m1"></div>
+
+
+
+</body>
+</html>

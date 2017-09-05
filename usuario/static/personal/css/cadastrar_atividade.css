@@ -33,14 +33,6 @@ label{
     margin-top: 50px;
 }
 
-#date_div_in{
-    padding-left: 0px;
-}
-
-#date_div_out{
-    padding-right: 0px;
-}
-
 .lista_lateral_direita{
     padding: 0px;
     padding-top: 10px;
@@ -119,6 +111,16 @@ label{
 }
 
 #botao_submit{
-    float: right;
     margin-top: 50px;
+}
+
+#date_value_div{
+    padding: 0px;
+}
+#date_div{
+    padding: 0px;
+}
+
+#value_div{
+    padding:0px;
 }

@@ -100,8 +100,8 @@
 
 								<div class="col m8 components_div_evento" id="titulo_descricao">
 
-									<p id="titulo_div_evento"> {{ evento.titulo }} </p>
-									<p id="descricao_div_evento"> {{ evento.descricao }} </p>
+									<p id="titulo_div_evento"> {{ evento.titulo|upper }} </p>
+									<p id="descricao_div_evento"> {{ evento.descricao.capitalize }} </p>
 
 								</div>
 								<div class="col m4 components_div_evento white" id="imagem_evento">

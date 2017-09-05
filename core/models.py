@@ -32,7 +32,7 @@ class TipoApoio(Enum):
 
 
 class TipoAtividade(Enum):
-    DEFAULT = 0
+    OUTROS = 0
     PALESTRA = 1
     MINICURSO = 2
     MESAREDONDA = 3
@@ -78,7 +78,7 @@ class Atividade(models.Model):
     descricao = models.CharField(max_length=150)
     valor = models.FloatField()
     data = models.DateField()
-    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.OUTROS)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="atividades")
 
 

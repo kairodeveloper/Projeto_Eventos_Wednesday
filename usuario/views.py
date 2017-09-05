@@ -3,6 +3,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from .forms import *
+from .models import *
+from core.models import *
+from core.forms import *
+from core.views import *
 import re
 # Create your views here.
 
@@ -26,8 +30,17 @@ def registrar(request):
 
 @login_required()
 def home(request):
+    user = request.user
     eventos = Evento.objects.all()
-    return render(request, "base/home.html", {'eventos':eventos})
+    eventos_non_user = []
+
+    for i in eventos:
+        if i.administrador.id!=user.id:
+            eventos_non_user.append(i)
+
+    return render(request, "base/home.html", {'eventos':eventos_non_user})
+
+
 
 
 @login_required
@@ -47,20 +60,14 @@ def criar_evento(request):
                                        data_fim=data_fim)
 
             eventos = Evento.objects.all()
-            return render(request,"base/home.html", {'eventos': eventos,'msg':'Evento Criado'})
-
+            evento = eventos[len(eventos)-1]
+            return render(request,"base/evento_admin.html",{"evento":evento})
+        else:
+            return render(request, "base/cadastrar_evento.html", {'form': form})
     else:
-        apoios = [ ]
-        form = CadastrarEventoForm()
-        form2 = CadastrarInstituicaoForm()
-        teste = ["kairo","kairo","kairo","kairo","kairo"]
+       form = CadastrarEventoForm()
 
-    return render(request, "base/cadastrar_evento.html",{'form': form, 'form2':form2,'teste':teste})
-
-
-def page_evento(request, id_recebido):
-    evento = Evento.objects.get(id=id_recebido)
-    return render(request, "base/evento.html", {'evento' : evento})
+    return render(request, "base/cadastrar_evento.html",{'form': form})
 
 
 #funcao: recebe o formato de data do materialize e converte para o formato do django

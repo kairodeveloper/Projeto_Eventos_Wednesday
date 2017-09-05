@@ -25,9 +25,3 @@ class CadastrarEventoForm(forms.ModelForm):
         model = Evento
         fields = ['titulo','descricao','tipo_evento']
 
-
-class CadastrarInstituicaoForm(forms.ModelForm):
-
-    class Meta:
-        model = Instituicao
-        fields = ['endereco', 'descricao']

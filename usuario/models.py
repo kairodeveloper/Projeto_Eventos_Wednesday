@@ -70,7 +70,7 @@ class Inscricao(models.Model):
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
-    valor = models.DecimalField(max_digits=4, decimal_places=2)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
     pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
 

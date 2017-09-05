@@ -14,17 +14,11 @@
  		   window.location.href = url;
 		}
 
-		function inflate_dialog(){
-            var nome;
-            nome = prompt ("Qual é o seu nome?");
-            alert ("Seu nome é "+nome);
-
-		}
-
     </script>
 
 </head>
 <body>
+
     <!--Top bar-->
     <div class="row teal lighten-1 z-depth-1" id="top_bar">
         <div class="col m1"></div>
@@ -47,13 +41,13 @@
         </div>
         <div class="col m1r"></div>
     </div>
+
     <!--Titulo-->
-
-    <div class="row z-depth-1" id="div_titulo">
+    <div class="row teal dark z-depth-1" id="div_titulo">
         <div class="col m1"></div>
-        <div class="col m10" id="titulo_page">
+        <div class="col m7" id="titulo_page">
 
-            <h2>Crie seu evento</h2>
+            <p id="titulo">CRIE SEU EVENTO/ Dados básicos</p>
 
         </div>
         <div class="col m1"></div>
@@ -78,119 +72,18 @@
                     <input type="text" name="data_out" class="datepicker">
                 </div>
 
-                <div class="button_submit_new_event">
-                    <button type="submit">CRIAR EVENTO</button>
+                <div class="col m12" id="button_submit_new_event_div">
+                    <button id="botao_submit" class="col m3 btn-large wave-lighten" type="submit">CONTINUAR</button>
                 </div>
 
             </form>
 
         </div>
         <div class="col m1"></div>
+
         <div class="col m2">
 
-            <ul class="collapsible" data-collapsible="accordion" id="menu_direito">
-                <li>
-                    <div class="collapsible-header">
-                      <b class="material-icons">Atividades</b>
-                      <span></span>
-                    </div>
-                    <div class="collapsible-body lista_lateral_direita">
-
-                        {% for i in teste %}
-
-                            <p class="object_title">{{i|upper}}</p>
-
-                        {% endfor %}
-
-                        <div class="div_btn_add">
-                            <button class="col m12 teal white-text waves-effect waves-light btn_add"  href="#modal1">
-                                ADICIONAR APOIADOR
-                            </button>
-                        </div>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                      <b class="material-icons">Apoiadores</b>
-                      <span></span></div>
-                    <div class="collapsible-body lista_lateral_direita">
-
-                        {% for i in teste %}
-
-                            <p class="object_title">{{i|upper}}</p>
-
-                        {% endfor %}
-
-                        <div class="div_btn_add">
-                            <button class="col m12 teal white-text waves-effect waves-light btn_add">
-                                ADICIONAR APOIADOR
-                            </button>
-                        </div>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                      <b class="material-icons">Cupons</b>
-                      <span></span></div>
-                    <div class="collapsible-body lista_lateral_direita">
-
-                        {% for i in teste %}
-
-                            <p class="object_title">{{i|upper}}</p>
-
-                        {% endfor %}
-
-                        <div class="div_btn_add">
-                            <button class="col m12 teal white-text waves-effect waves-light btn_add" onclick="inflate_dialog()">
-                                ADICIONAR APOIADOR
-                            </button>
-                        </div>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                      <b class="material-icons">Equipe</b>
-                      <span></span></div>
-                    <div class="collapsible-body lista_lateral_direita">
-
-                        {% for i in teste %}
-
-                            <p class="object_title">{{i|upper}}</p>
-
-                        {% endfor %}
-
-                        <div class="div_btn_add">
-                            <button class="col m12 teal white-text waves-effect waves-light btn_add" onclick="inflate_dialog()">
-                                ADICIONAR INTEGRANTE
-                            </button>
-                        </div>
-
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                      <b class="material-icons">Tags</b>
-                      <span></span></div>
-                    <div class="collapsible-body lista_lateral_direita">
-
-                        {% for i in teste %}
-
-                            <p class="object_title">{{i|upper}}</p>
-
-                        {% endfor %}
-
-                        <div class="div_btn_add">
-                            <button class="col m12 teal white-text waves-effect waves-light btn_add" onclick="inflate_dialog()">
-                                ADICIONAR TAG
-                            </button>
-                        </div>
-
-                    </div>
-                </li>
-            </ul>
+        </div>
 
 </body>
 </html>
