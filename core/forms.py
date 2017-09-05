@@ -7,7 +7,7 @@ class CadastrarAtividadeForm(forms.ModelForm):
 
     class Meta:
         model = Atividade
-        fields = ['titulo','descricao','tipo_atividade']
+        fields = ['titulo']
 
 class CadastrarInstituicaoForm(forms.ModelForm):
 

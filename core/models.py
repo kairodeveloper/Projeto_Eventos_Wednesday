@@ -56,12 +56,12 @@ class TipoResponsabilidade(Enum):
 
 
 class Tag(models.Model):
-    nome = models.CharField(max_length=20)
+    nome = models.CharField(max_length=20,null=False, blank=False)
 
 
 class Local(models.Model):
     nome = models.CharField(max_length=30)
-    longradouro = models.CharField(max_length=30)
+    logradouro = models.CharField(max_length=30)
     numero = models.DecimalField("numero", max_digits=4, decimal_places=1)
 
 
@@ -114,6 +114,8 @@ class Evento(models.Model):
     def adicionar_evento_satelite(self, evento):
         evento.evento_principal = self
         evento.save()
+
+
 
 
 '''
@@ -178,7 +180,7 @@ class AtividadeInscrita(Atividade):
     valor = models.FloatField()
     data = models.DateField()
     horario = models.TimeField('horario', blank=True)
-    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.OUTROS)
     trilha = models.ForeignKey(Trilha, on_delete=models.CASCADE, related_name='atividades')
     espaco_fisico = models.ForeignKey(EspacoFisico, on_delete=models.CASCADE, related_name="atividade_inscrita")
     Atividade.evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name='atividades_inscritas')
