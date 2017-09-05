@@ -2,24 +2,40 @@
 {% load static %}
 <html>
 <head>
-	<title>Event_On | Login</title>
+	<title>ICARUS | Login</title>
 	{% include "headerbase.html" %}
+	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/login.css' %}">
 </head>
-<body>
+<body background="{% static 'personal/images/evento.jpg' %}">
 	<div class="fullscreen">
-		<div class="row container valign-wrapper">
-			<div class="col m7">
-				<p class="center-align justificado">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nibh gravida, tempor arcu quis, aliquet neque. Nullam tincidunt consectetur est et laoreet.</p>
-			</div>
-			<div class="col m5">
-			<h4 class="center-align">Login</h4>
+		<div class="row">
+			<div class="col m12 z-depth-4 cyan darken-1" id="top_bar">
 
-					<form method="POST">
+				<div class="col m5"></div>
+				<div class="col m2 black" id="logo">
+					<p class="white-text"> logo </p>
+				</div>
+				<div class="col m5"></div>
+
+			</div>
+			<div class="col m12" id="between_top_login"></div>
+		</div>
+		<div class="row">
+			<div class="col m4">
+			</div>
+			<div class="col m4 z-depth-5" id="login_div">
+				{% if form.errors %}
+					<p>Your username and password didn't match. Please try again.</p>
+				{% endif %}
+				<h4 class="center-align light-blue-text darken-4" id="texto_login">Entre e tenha acesso à nossos serviços</h4>
+
+					<form method="POST" class="form_login">
 						<div class="row">
 							{% csrf_token %}
 							{{ form.as_p }}
 							<div class="input-field col m12">
-							  <button class="waves-effect waves-light btn col m12 m-btn" type="submit">LOGIN</button>
+								<button class="waves-effect waves-light cyan darken-1 btn col m12 m-btn" id="button_login" type="submit">ENTRAR</button>
+								<p class="center-align" id="texto_cadastre_se">Ainda não é cadastrado? <a href="{% url 'cadastrar' %}">Cadastre-se</a></p>
 							</div>
 						</div>
 					</form>

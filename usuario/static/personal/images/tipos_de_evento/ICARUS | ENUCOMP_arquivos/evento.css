@@ -1,0 +1,36 @@
+
+#top_bar{
+    height: 100px;
+}
+
+#div_logo{
+    height:100px;
+    background-color: #000;
+}
+
+#nome_evento{
+    padding: 0px;
+}
+
+#nome_evento p{
+    color: white;
+    font-family: Impact, fantasy;
+    text-align: center;
+    font-size: 32px;
+}
+
+#div_fim_inscricao{
+    padding: 0px;
+}
+
+#div_fim_inscricao button{
+    margin-top: 5%;
+    width: 100%;
+    height: 80px;
+    border: none;
+    border-left: 2px solid #00838f;
+    border-right: 2px solid #00838f;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}

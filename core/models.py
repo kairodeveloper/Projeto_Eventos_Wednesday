@@ -32,7 +32,7 @@ class TipoApoio(Enum):
 
 
 class TipoAtividade(Enum):
-    DEFAULT = 0
+    OUTROS = 0
     PALESTRA = 1
     MINICURSO = 2
     MESAREDONDA = 3
@@ -45,8 +45,8 @@ class Tag(models.Model):
     #TODO tag many to many
 
 class Evento(models.Model):
-    titulo = models.CharField(max_length=45)
-    descricao = models.CharField(max_length=200)
+    titulo = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=500)
     administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE, related_name='eventos_criados')
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.OUTROS)
     dt_inicio = models.DateField()
@@ -64,6 +64,7 @@ class Evento(models.Model):
             raise Exception("Data invalida ")
 
 class Instituicao(models.Model):
+    nome = models.CharField(max_length=60)
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
 
@@ -78,7 +79,7 @@ class Atividade(models.Model):
     descricao = models.CharField(max_length=150)
     valor = models.FloatField()
     data = models.DateField()
-    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.DEFAULT)
+    tipo_atividade = EnumField(TipoAtividade, default=TipoAtividade.OUTROS)
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, related_name="atividades")
 
 

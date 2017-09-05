@@ -1,5 +1,6 @@
 from django import forms
 from .models import Usuario
+from core.models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 
@@ -16,3 +17,11 @@ class CadastrarForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['nomedeusuario', 'email']
+
+
+class CadastrarEventoForm(forms.ModelForm):
+
+    class Meta:
+        model = Evento
+        fields = ['titulo','descricao','tipo_evento']
+

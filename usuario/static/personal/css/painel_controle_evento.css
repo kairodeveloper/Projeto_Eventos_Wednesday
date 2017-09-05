@@ -1,0 +1,271 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+
+h1{
+    font-family: sans-serif;
+    color: #00acc1;
+}
+
+h3{
+    font-family: sans-serif;
+    color: #00acc1;
+    margin-bottom: 20px;
+}
+
+label{
+    font-size: 16px;
+}
+
+#top_bar{
+    width: 100%;
+    height: 100px;
+    background-color: #4db6ac;
+}
+
+#div_form{
+    padding: 0px;
+    margin-top: 50px;
+}
+
+#menu_direito{
+    margin-top: 50px;
+}
+
+#date_div_in{
+    padding-left: 0px;
+}
+
+#date_div_out{
+    padding-right: 0px;
+}
+
+.lista_lateral_direita{
+    padding: 0px;
+    padding-top: 10px;
+}
+
+.div_btn_add{
+    margin-top: 10px;
+}
+
+.object_title{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn_add{
+    height:50px;
+    border: none;
+}
+
+
+
+/*titulo*/
+#titulo_page{
+    padding: 20px 0px 20px 0px;
+}
+
+#div_titulo{
+    margin-top: -20px;
+}
+
+#titulo{
+    font-family: sans-serif;
+    color: #FFF;
+    font-size: 30px;
+}
+
+/*menu superior*/
+.component_top_bar{
+    height: 100%;
+}
+
+#div_back_home{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#div_eventos{
+    padding-left: 0px;
+}
+
+#btn_voltar_home{
+    height:80%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+}
+
+#btn_meus_eventos{
+    height:80%;
+    width: 100%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    border-right: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}*{
+    padding:0px;
+    margin:0px;
+}
+
+h1{
+    font-family: sans-serif;
+    color: #00acc1;
+}
+
+h3{
+    font-family: sans-serif;
+    color: #00acc1;
+    margin-bottom: 20px;
+}
+
+label{
+    font-size: 16px;
+}
+
+#top_bar{
+    width: 100%;
+    height: 100px;
+    background-color: #4db6ac;
+}
+
+#div_form{
+    padding: 0px;
+    margin-top: 50px;
+}
+
+#menu_direito{
+    margin-top: 50px;
+}
+
+#date_div_in{
+    padding-left: 0px;
+}
+
+#date_div_out{
+    padding-right: 0px;
+}
+
+.lista_lateral_direita{
+    padding: 0px;
+    padding-top: 10px;
+}
+
+.div_btn_add{
+    margin-top: 10px;
+}
+
+.object_title{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn_add{
+    height:50px;
+    border: none;
+}
+
+
+
+/*titulo*/
+#titulo_page{
+    padding: 20px 0px 20px 0px;
+}
+
+#div_titulo{
+    margin-top: -20px;
+}
+
+#titulo{
+    font-family: sans-serif;
+    color: #FFF;
+    font-size: 30px;
+}
+
+/*menu superior*/
+.component_top_bar{
+    height: 100%;
+}
+
+#div_back_home{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#div_eventos{
+    padding-left: 0px;
+}
+
+#btn_voltar_home{
+    height:80%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+}
+
+#btn_meus_eventos{
+    height:80%;
+    width: 100%;
+    margin-top: 5%;
+    border: none;
+    border-left: 2px solid #00838f;
+    border-right: 2px solid #00838f;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+/*Cards*/
+
+/*Card de atividades*/
+#card_atividades_evento{
+    padding: 0px;
+    margin-top: 50px;
+    background-color: #fafafa;
+}
+
+#top_card{
+    padding: 0px 20px 0px 20px;
+    height: 50px;
+    background-color: #FFF;
+}
+
+#top_card p{
+    font-size: 30px;
+    font-family: Sans-serif;
+    color: #004d40;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#btn_add_evento{
+    height: 50px;
+    width: 50px;
+    padding: 0px;
+    border: none;
+    background-color: #FFF;
+
+}
+
+#btn_add_evento img{
+    height: 100%;
+    width: 100%;
+}
+
+#content_card{
+    height: 300px;
+    overflow:auto;
+}

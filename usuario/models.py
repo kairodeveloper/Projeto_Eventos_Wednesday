@@ -44,7 +44,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     def criar_evento(self,titulo,descricao,tipo_evento,data_inicio, data_fim):
-        evento = core_models.Evento(titulo=titulo, descricao=descricao, tipo_evento=tipo_evento, dt_inicio=data_inicio, dt_fim=data_fim, administrador=self)
+        evento = core_models.Evento(titulo=titulo, descricao=descricao, tipo_evento=tipo_evento, dt_inicio=data_inicio, dt_fim=data_fim, administrador=self, estado_evento=core_models.EstadoEvento.ABERTO)
         evento.save()
 
     def listar_evento(self):
@@ -70,7 +70,7 @@ class Inscricao(models.Model):
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE)
     solicitante = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_inscricao = models.DateTimeField()
-    valor = models.DecimalField(max_digits=4, decimal_places=2)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
     pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
 
