@@ -1,5 +1,6 @@
 from django.db import models
 from time import timezone
+from datetime import datetime, date, timedelta
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserManager, PermissionsMixin
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -81,19 +82,19 @@ class Funcionario(models.Model):
     def criar_cupom(self, desconto, validade, evento):
         cupom = Cupom(desconto=desconto, validade=validade, evento=evento)
         cupom.save()
-
+    '''
     def checkar_presenca_atividade(self, nome_atividade, inscricao):
-        lista_atividades = inscricao.get_atividades()
+        lista_atividades = inscricao.get_inscricoes()
 
-        #for atividdade in lista_atividades:
-        #    if nome_atividade == atividdade.titulo:
-        #        atividdade
-
+        #for item_inscricao in lista_atividades:
+            #if nome_atividade == item_inscricao.atividdade.titulo:
+                #item_inscricao.check(hora=datetime.now(), data=)
+    '''
 
 class Inscricao(models.Model):
     evento = models.ForeignKey('core.Evento', on_delete=models.CASCADE, related_name='inscricoes')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inscricoes')
-    data_inscricao = models.DateTimeField()
+    data_inscricao = models.DateTimeField(auto_now_add=True)
     valor = models.DecimalField(max_digits=4, decimal_places=2)
     status = EnumField(EstadoInscricao, default=EstadoInscricao.NAO_PAGO)
     pagamento = models.ForeignKey('core.Pagamento', on_delete=models.CASCADE, related_name="inscricao")
@@ -111,27 +112,42 @@ class Inscricao(models.Model):
         else:
             raise Exception("Cupom nao e valido  ")
 
+    def get_inscricoes(self):
+        return self.item_inscricao
+
     def get_atividades(self):
         return self.item_inscricao.atividade
 
 
 class Check_in(models.Model):
-    hora = models.TimeField('hora', blank=True, null=False, default="00:00")
+    hora = models.TimeField('hora', blank=True, auto_now_add=True)
     data = models.DateField('Data de entrada', auto_now_add=True)
-    gerente = models.ForeignKey('usuario.Funcionario', related_name='gerente', )
+    gerente = models.ForeignKey(Funcionario, on_delete=models.CASCADE, related_name='gerente')
     checked = models.BooleanField(default=False)
 
-    def atividade_checkada(self, atividade):
-        lista_atividades = self.item_inscricao
-        for atividade_inscrita in lista_atividades:
-            if atividade_inscrita.atividade.titulo == atividade.titulo:
-                self.checked = True
+    def checkar(self):
+        hora_atual = datetime.now().time()
+        hr = self.item_inscricao.atividade.horario
+        hr = datetime.combine(date.min, hr) - datetime.min
+        hora_atual = datetime.combine(date.min, hora_atual) - datetime.min
+        dataAtual = datetime.now().date()
+        dataAtividade = self.item_inscricao.atividade.data
 
-        return self.checked
+        if True:#dataAtual < dataAtividade:
+            if True:#hr <= hora_atual:
+                self.checked = True
+            else:
+                self.checked = False
+        else:
+            self.checked = False
+        self.save()
 
 
 class Item_Inscricao(models.Model):
     inscricao = models.ForeignKey(Inscricao, on_delete=models.CASCADE, related_name='item_inscricao')
     atividade = models.ForeignKey('core.AtividadeInscrita', on_delete=models.CASCADE, related_name='item_inscrisao')
-    horario = models.TimeField()
-    check_in = models.ForeignKey(Check_in, on_delete=models.CASCADE, related_name='item_inscricao')
+    check_in = models.OneToOneField(Check_in, on_delete=models.CASCADE, related_name='item_inscricao')
+
+    #def check_item(self, hora, data, gerente):
+        #check = Check_in(hora=hora, data=data, gerente=gerente, checked=True)
+        #check.save()p.
