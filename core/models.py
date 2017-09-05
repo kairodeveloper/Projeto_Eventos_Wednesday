@@ -64,6 +64,7 @@ class Evento(models.Model):
             raise Exception("Data invalida ")
 
 class Instituicao(models.Model):
+    nome = models.CharField(max_length=60)
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
 

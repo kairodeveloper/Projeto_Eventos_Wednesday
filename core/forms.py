@@ -14,3 +14,9 @@ class CadastrarInstituicaoForm(forms.ModelForm):
     class Meta:
         model = Instituicao
         fields = ['endereco', 'descricao']
+
+class CadastrarApoioForm(forms.ModelForm):
+
+    class Meta:
+        model = ApoioEvento
+        fields = ['tipo_apoio']

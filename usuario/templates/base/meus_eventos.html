@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-	<title>ICARUS | Home</title>
+	<title>ICARUS | Meus Eventos</title>
 	{% include "headerbase.html" %}
 	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/base_home.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'personal/css/base_home.js' %}">
@@ -26,20 +26,11 @@
 				<div class="col m1 black component_bar"></div>
 				<div class="col m1 component_bar"></div>
 
-				<div class="col m3 row component_bar" id="div_pesquisa">
-
-					<input class="col m10" id="entrada_tag" placeholder="Pesquise eventos em nossa plataforma..."/>
-					<button class="col m2" id="entrada_btn">
-						
-						<img class="center-align" id="img_pesquisa" onclick="" src="{% static 'personal/images/pesquisa.png' %}">
-						
-					</button>
-
-				</div>
+				<div class="col m3 row"></div>
 
 				<div class="col m2 component_bar"></div>
 				<div class="col m1 component_bar" id="btn_eventos">
-					<button class="teal lighten-1 white-text" onclick="call_page('{% url 'meus_eventos' %}')" id="botao_lista_eventos">MEUS EVENTOS</button>
+					<button class="teal lighten-1 white-text" onclick="call_page('{% url 'home' %}')" id="botao_lista_eventos">HOME</button>
 				</div>
 
 				<div class="col m1 component_bar" id="btn_inscricoes">
@@ -105,9 +96,9 @@
 
 								</div>
 								<div class="col m4 components_div_evento white" id="imagem_evento">
-									
+
 									<img style="height: 100%; width: 100%;" src="{% static 'personal/images/tipos_de_evento/outros.jpg' %}">
-									
+
 								</div>
 
 							</div>
@@ -115,7 +106,7 @@
 
 								<p id="tags_inscreva_se">Aqui aparecerão as tags</p>
 								<!--<p>{{ evento.id }}</p>-->
-								<button class="btn waves-effect waves-teal" onclick="call_page('{% url 'page_evento' evento.id %}')" id="botao_inscreva_se">Acesse a página do evento</button>
+								<button class="btn waves-effect waves-teal" onclick="call_page('{% url 'page_evento_admin' evento.id %}')" id="botao_inscreva_se">Administre o evento</button>
 
 							</div>
 

@@ -114,7 +114,7 @@
 
                     <p class="col m11">CUPOMS</p>
 
-                    <button class="col m1" id="btn_add_evento">
+                    <button class="col m1" id="btn_add_evento" onclick="call_page('{% url 'novos_cupoms' evento.id %}')">
 
                         <img src="{% static 'personal/images/plus.png' %}">
 
@@ -123,9 +123,9 @@
                 </div>
 
                 <div class="card-content" id="content_card">
-                    {% for i in teste %}
+                    {% for i in cupons %}
 
-                    <p>{{i}}</p>
+                    <p> {{ i.cod_cupom }} </p>
 
                     {% endfor %}
                 </div>
@@ -140,7 +140,7 @@
 
                     <p class="col m11">APOIOS</p>
 
-                    <button class="col m1" id="btn_add_evento">
+                    <button class="col m1" id="btn_add_evento" onclick="call_page('{% url 'novos_apoios' evento.id %}')">
 
                         <img src="{% static 'personal/images/plus.png' %}">
 
@@ -149,9 +149,9 @@
                 </div>
 
                 <div class="card-content" id="content_card">
-                    {% for i in teste %}
+                    {% for i in apoios %}
 
-                    <p>{{i}}</p>
+                    <p> {{ i.instituicao.nome }} </p>
 
                     {% endfor %}
                 </div>
@@ -185,12 +185,12 @@
                     </thead>
 
                     <tbody>
-                        {% for i in users %}
+                        {% for i in inscritos %}
                         <tr>
-                            <td> {{ i.nomedeusuario }} </td>
-                            <td>Eclair</td>
-                            <td>$0.87</td>
-                            <td>Pago</td>
+                            <td> {{ i.solicitante.nomedeusuario }} </td>
+                            <td>{{i.data}}</td>
+                            <td>{{i.valor}}</td>
+                            <td>{{i.status}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

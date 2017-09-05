@@ -6,6 +6,9 @@
 	<title>ICARUS | {{evento.titulo|upper}} </title>
 	{% include "headerbase.html" %}
     <link rel="stylesheet" type="text/css" href="{% static 'personal/css/evento.css' %}">
+    <script src="{% static 'personal/js/evento.js' %}"></script>
+
+
 </head>
 <body>
 	<div class="fullscreen">
@@ -22,15 +25,11 @@
 
             <div class="col m6" id="nome_evento">
 
-                <p>{{evento.titulo|upper}}</p>
-
             </div>
 
             <div class="col m1"></div>
 
             <div class="col m1" id="div_fim_inscricao">
-
-                <button class="teal lighten-1 "> {{ texto }} </button>
 
             </div>
 
@@ -39,7 +38,57 @@
         </div>
 
         <!-- conteudo -->
+        <div class="row">
+            <div class="col m2"></div>
+            <div class="col m6 ">
 
+                <h1>{{evento.titulo.capitalize}}</h1>
+
+                <h5>{{evento.descricao.capitalize}}</h5>
+
+                <h5><b>Atividades:</b></h5>
+                <ul>
+                    {% for i in atividades %}
+                        <li>{{i.titulo}}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5><br>De {{evento.dt_inicio}} até {{evento.dt_fim}}<br><br><br></h5>
+
+                <h5>Preço do evento: R$ {{valor_total}}</h5>
+
+                <br><br><br>
+
+
+                <form method="POST" name="cadastro_instituicao" class="form_cadastro_ev">
+                    {% csrf_token %}
+
+                    <label>Selecione as atividades que você deseja</label>
+
+                    <select multiple>
+                        <option value="" disabled selected>Nenhuma</option>
+                        {% for i in atividades %}
+                            <option value="{{i.id}}">{{i.titulo}}</option>
+
+                        {% endfor %}
+                    </select>
+
+                    <button class="col m4 red white-text" type="submit"> Me Inscrever! </button>
+
+                </form>
+
+
+                <div class="col m2"></div>
+
+                <div class="col m2"></div>
+
+            </div>
+
+            <div class="col m2">
+
+            </div>
+
+        </div>
 
 	</div>
 </body>

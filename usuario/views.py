@@ -70,6 +70,11 @@ def criar_evento(request):
     return render(request, "base/cadastrar_evento.html",{'form': form})
 
 
+def meus_eventos(request):
+    usuario = request.user
+    eventos = Evento.objects.filter(administrador=usuario)
+    return render(request, "base/meus_eventos.html", {"usuario":usuario,"eventos":eventos})
+
 #funcao: recebe o formato de data do materialize e converte para o formato do django
 def recebe_data(sequencia):
     inicio = re.findall('(?P<Dia>[0]*[1-9]|[1-2][0-9]|[3][0-1])\s(?P<Mes>[A-Z][a-z]+),\s(?P<Ano>\d{4})', sequencia)
