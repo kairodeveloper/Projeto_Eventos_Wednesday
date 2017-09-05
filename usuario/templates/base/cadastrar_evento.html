@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ICARUS - Cadastre seu evento</title>
+    {% include "headerbase.html" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'personal/css/cadastrar_evento.css' %}">
+    <script src="{% static 'personal/js/cadastrar_evento.js' %}"></script>
+
+    <script>
+
+        function call_page(url){
+ 		   window.location.href = url;
+		}
+
+    </script>
+
+</head>
+<body>
+
+    <!--Top bar-->
+    <div class="row teal lighten-1 z-depth-1" id="top_bar">
+        <div class="col m1"></div>
+        <div class="col m1" id="top_bar_logo"></div>
+        <div class="col m6"></div>
+        <div class="col m1"></div>
+        <div class="col m1 component_top_bar" id="div_back_home">
+
+            <button class="teal lighten-1" onclick="call_page('{% url  'home' %}')" id="btn_voltar_home">
+                <p>VOLTAR PRA HOME</p>
+            </button>
+
+        </div>
+        <div class="col m1 component_top_bar" id="div_eventos">
+
+            <button class="teal lighten-1" id="btn_meus_eventos">
+                <p>MEUS EVENTOS</p>
+            </button>
+
+        </div>
+        <div class="col m1r"></div>
+    </div>
+
+    <!--Titulo-->
+    <div class="row teal dark z-depth-1" id="div_titulo">
+        <div class="col m1"></div>
+        <div class="col m7" id="titulo_page">
+
+            <p id="titulo">CRIE SEU EVENTO/ Dados básicos</p>
+
+        </div>
+        <div class="col m1"></div>
+    </div>
+
+    <!--Main-->
+    <div class="row">
+        <div class="col m1"></div>
+        <div class="col m7" id="div_form">
+
+            <form method="POST" name="cadastro_instituicao" class="form_cadastro_ev">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="col m6" id="date_div_in">
+                    <label>Data de inicio:</label>
+                    <input type="text" name="data_in" class="datepicker">
+                </div>
+
+                <div class="col m6" id="date_div_out">
+                    <label>Data de encerramento:</label>
+                    <input type="text" name="data_out" class="datepicker">
+                </div>
+
+                <div class="col m12" id="button_submit_new_event_div">
+                    <button id="botao_submit" class="col m3 btn-large wave-lighten" type="submit">CONTINUAR</button>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col m1"></div>
+
+        <div class="col m2">
+
+        </div>
+
+</body>
+</html>

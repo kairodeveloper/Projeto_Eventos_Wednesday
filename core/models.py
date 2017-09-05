@@ -32,7 +32,7 @@ class TipoApoio(Enum):
 
 
 class TipoAtividade(Enum):
-    DEFAULT = 0
+    OUTROS = 0
     PALESTRA = 1
     MINICURSO = 2
     MESAREDONDA = 3
@@ -66,8 +66,8 @@ class Local(models.Model):
 
 
 class Evento(models.Model):
-    titulo = models.CharField(max_length=45)
-    descricao = models.CharField(max_length=200)
+    titulo = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=500)
     administrador = models.ForeignKey('usuario.Usuario', on_delete=models.CASCADE, related_name='eventos_criados')
     tipo_evento = EnumField(TipoEvento, default=TipoEvento.OUTROS)
     dt_inicio = models.DateField()
@@ -124,6 +124,7 @@ class Sub_evento(models.Model):
 
 
 class Instituicao(models.Model):
+    nome = models.CharField(max_length=60)
     endereco = models.CharField(max_length=60)
     descricao = models.CharField(max_length=200)
 
