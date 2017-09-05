@@ -1,0 +1,36 @@
+#top_bar{
+    height: 100px;
+}
+
+#logo{
+    height:100px;
+    background-color: #000;
+}
+
+#between_top_login{
+    height: 40px;
+}
+
+#login_div{
+    background: #FFF;
+    height: 700px;
+    padding-top: 2%;
+    padding-right: 4%;
+    padding-left: 4%;
+}
+
+#texto_login{
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 2px #fafafa;
+    font-size: 40px;
+    font-family: sans-serif;
+}
+
+#button_login{
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+#texto_cadastre_se{
+    font-size: 18px;
+}
