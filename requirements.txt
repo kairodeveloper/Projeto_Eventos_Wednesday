@@ -22,7 +22,7 @@ isc==1.0
 javapackages==4.7.0
 kerberos==1.2.5
 langtable==0.0.36
-lxml==3.7.2
+lxml==4.6.2
 ntplib==0.3.3
 ordered-set==2.0.0
 pbr==1.10.0
