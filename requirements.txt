@@ -12,7 +12,7 @@ Django==1.11.4
 django-enumfields==0.9.0
 file-magic==0.3.0
 fros==1.1
-html5lib==0.999
+html5lib==0.999999999
 humanize==0.5.1
 idna==2.5
 iniparse==0.4
